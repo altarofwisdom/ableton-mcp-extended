@@ -973,6 +973,22 @@ def browse_place(ctx: Context, place_index: int = None, place_uri: str = None, p
         return f"Error browsing place: {str(e)}"
 
 @mcp.tool()
+def explore_browser_structure(ctx: Context) -> str:
+    """
+    Comprehensive exploration of Ableton's browser structure to find user-added folders and Places.
+    This diagnostic tool examines all browser sections to locate where custom folders are stored.
+
+    Useful for debugging when get_places() doesn't return expected user-added folders.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("explore_browser_structure")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error exploring browser structure: {str(e)}")
+        return f"Error exploring browser structure: {str(e)}"
+
+@mcp.tool()
 def explore_api(ctx: Context) -> str:
     """
     Explore the Ableton Live Python API to discover available methods and capabilities.

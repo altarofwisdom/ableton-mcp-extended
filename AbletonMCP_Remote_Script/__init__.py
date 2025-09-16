@@ -428,6 +428,8 @@ class AbletonMCP(ControlSurface):
                 place_uri = params.get("place_uri", None)
                 path = params.get("path", "")
                 response["result"] = self._browse_place(place_index, place_uri, path)
+            elif command_type == "explore_browser_structure":
+                response["result"] = self._explore_browser_structure()
             else:
                 response["status"] = "error"
                 response["message"] = "Unknown command: " + command_type
@@ -2409,3 +2411,124 @@ class AbletonMCP(ControlSurface):
         except Exception as e:
             self.log_message("Error browsing place: {0}".format(str(e)))
             return {"error": "Failed to browse place: {0}".format(str(e))}
+
+    def _explore_browser_structure(self):
+        """Comprehensive exploration of browser structure to find user folders"""
+        try:
+            app = self.application()
+            if not app or not app.browser:
+                return {"error": "Browser not available"}
+
+            browser = app.browser
+            exploration = {
+                "browser_attributes": [],
+                "detailed_exploration": {}
+            }
+
+            # Get all browser attributes
+            browser_attrs = [attr for attr in dir(browser) if not attr.startswith('_')]
+            exploration["browser_attributes"] = browser_attrs
+
+            # Explore each major browser section
+            sections_to_explore = [
+                'user_library', 'places', 'user_folders', 'user_places',
+                'library', 'folders', 'samples', 'instruments', 'audio_effects',
+                'midi_effects', 'drums', 'sounds', 'plugins', 'max_for_live'
+            ]
+
+            for section_name in sections_to_explore:
+                if hasattr(browser, section_name):
+                    try:
+                        section = getattr(browser, section_name)
+                        section_info = {
+                            "exists": True,
+                            "type": str(type(section)),
+                            "attributes": [attr for attr in dir(section) if not attr.startswith('_')],
+                            "has_children": hasattr(section, 'children'),
+                            "children_info": []
+                        }
+
+                        # Try to get children information
+                        if hasattr(section, 'children'):
+                            try:
+                                children = list(section.children)
+                                section_info["children_count"] = len(children)
+
+                                # Get detailed info about first few children
+                                for i, child in enumerate(children[:10]):
+                                    child_info = {
+                                        "index": i,
+                                        "name": getattr(child, 'name', 'Unknown'),
+                                        "type": str(type(child)),
+                                        "uri": getattr(child, 'uri', ''),
+                                        "is_folder": getattr(child, 'is_folder', False),
+                                        "is_device": getattr(child, 'is_device', False),
+                                        "is_loadable": getattr(child, 'is_loadable', False),
+                                        "has_children": hasattr(child, 'children'),
+                                        "attributes": [attr for attr in dir(child) if not attr.startswith('_')][:15]  # Limit to first 15
+                                    }
+
+                                    # If this child has children, get a sample
+                                    if hasattr(child, 'children'):
+                                        try:
+                                            grandchildren = list(child.children)
+                                            child_info["children_count"] = len(grandchildren)
+                                            if grandchildren:
+                                                first_grandchild = grandchildren[0]
+                                                child_info["sample_grandchild"] = {
+                                                    "name": getattr(first_grandchild, 'name', 'Unknown'),
+                                                    "is_folder": getattr(first_grandchild, 'is_folder', False),
+                                                    "uri": getattr(first_grandchild, 'uri', '')
+                                                }
+                                        except Exception as e:
+                                            child_info["children_error"] = str(e)
+
+                                    section_info["children_info"].append(child_info)
+
+                            except Exception as e:
+                                section_info["children_error"] = str(e)
+
+                        # Try to get other useful properties
+                        for prop in ['name', 'uri', 'is_folder', 'is_loadable']:
+                            if hasattr(section, prop):
+                                try:
+                                    section_info[prop] = getattr(section, prop)
+                                except:
+                                    pass
+
+                        exploration["detailed_exploration"][section_name] = section_info
+
+                    except Exception as e:
+                        exploration["detailed_exploration"][section_name] = {
+                            "exists": True,
+                            "error": str(e)
+                        }
+                else:
+                    exploration["detailed_exploration"][section_name] = {"exists": False}
+
+            # Also try some additional patterns that might exist
+            additional_patterns = []
+            for attr in browser_attrs:
+                if any(keyword in attr.lower() for keyword in ['user', 'place', 'folder', 'custom', 'added']):
+                    additional_patterns.append(attr)
+
+            exploration["additional_user_related_attributes"] = additional_patterns
+
+            # Try to access these additional patterns
+            for pattern in additional_patterns[:5]:  # Limit to first 5 to avoid too much data
+                if pattern not in exploration["detailed_exploration"]:
+                    try:
+                        obj = getattr(browser, pattern)
+                        exploration["detailed_exploration"][pattern] = {
+                            "type": str(type(obj)),
+                            "has_children": hasattr(obj, 'children'),
+                            "attributes": [attr for attr in dir(obj) if not attr.startswith('_')][:10]
+                        }
+                    except Exception as e:
+                        exploration["detailed_exploration"][pattern] = {"error": str(e)}
+
+            return exploration
+
+        except Exception as e:
+            self.log_message("Error exploring browser structure: {0}".format(str(e)))
+            return {"error": "Failed to explore browser: {0}".format(str(e))}
