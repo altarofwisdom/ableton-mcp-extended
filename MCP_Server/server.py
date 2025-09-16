@@ -185,8 +185,7 @@ async def server_lifespan(server: FastMCP) -> AsyncIterator[Dict[str, Any]]:
 
 # Create the MCP server with lifespan support
 mcp = FastMCP(
-    "AbletonMCP",
-    description="Ableton Live integration through the Model Context Protocol",
+    name="AbletonMCP",
     lifespan=server_lifespan
 )
 
@@ -289,7 +288,7 @@ def get_track_info(ctx: Context, track_index: int) -> str:
 def create_midi_track(ctx: Context, index: int = -1) -> str:
     """
     Create a new MIDI track in the Ableton session.
-    
+
     Parameters:
     - index: The index to insert the track at (-1 = end of list)
     """
@@ -300,6 +299,22 @@ def create_midi_track(ctx: Context, index: int = -1) -> str:
     except Exception as e:
         logger.error(f"Error creating MIDI track: {str(e)}")
         return f"Error creating MIDI track: {str(e)}"
+
+@mcp.tool()
+def create_audio_track(ctx: Context, index: int = -1) -> str:
+    """
+    Create a new audio track in the Ableton session.
+
+    Parameters:
+    - index: The index to insert the track at (-1 = end of list)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("create_audio_track", {"index": index})
+        return f"Created new audio track: {result.get('name', 'unknown')}"
+    except Exception as e:
+        logger.error(f"Error creating audio track: {str(e)}")
+        return f"Error creating audio track: {str(e)}"
 
 
 @mcp.tool()
@@ -651,6 +666,213 @@ def load_drum_kit(ctx: Context, track_index: int, rack_uri: str, kit_path: str) 
     except Exception as e:
         logger.error(f"Error loading drum kit: {str(e)}")
         return f"Error loading drum kit: {str(e)}"
+
+@mcp.tool()
+def get_audio_input_routings(ctx: Context) -> str:
+    """
+    Get available audio input devices and channels from the current audio interface.
+    Shows all available input routing types and their channels.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_audio_input_routings")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting audio input routings: {str(e)}")
+        return f"Error getting audio input routings: {str(e)}"
+
+@mcp.tool()
+def get_track_input_routings(ctx: Context, track_index: int) -> str:
+    """
+    Get input routing information for a specific audio track.
+
+    Parameters:
+    - track_index: The index of the audio track to examine
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_track_input_routings", {"track_index": track_index})
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting track input routings: {str(e)}")
+        return f"Error getting track input routings: {str(e)}"
+
+@mcp.tool()
+def set_track_input_routing(ctx: Context, track_index: int, routing_type: str = "", routing_channel: str = "") -> str:
+    """
+    Set the input routing for an audio track.
+
+    Parameters:
+    - track_index: The index of the audio track to configure
+    - routing_type: The input device/type to route from (e.g., "Ext. In", "Master Track")
+    - routing_channel: The specific input channel (e.g., "1/2", "3/4")
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_input_routing", {
+            "track_index": track_index,
+            "routing_type": routing_type,
+            "routing_channel": routing_channel
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error setting track input routing: {str(e)}")
+        return f"Error setting track input routing: {str(e)}"
+
+@mcp.tool()
+def get_device_parameters(ctx: Context, track_index: int, device_index: int) -> str:
+    """
+    Get detailed information about a device's parameters.
+
+    Parameters:
+    - track_index: The index of the track containing the device
+    - device_index: The index of the device on the track
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_device_parameters", {
+            "track_index": track_index,
+            "device_index": device_index
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting device parameters: {str(e)}")
+        return f"Error getting device parameters: {str(e)}"
+
+@mcp.tool()
+def set_device_parameter(ctx: Context, track_index: int, device_index: int, parameter_index: int, value: float) -> str:
+    """
+    Set a device parameter value.
+
+    Parameters:
+    - track_index: The index of the track containing the device
+    - device_index: The index of the device on the track
+    - parameter_index: The index of the parameter to modify
+    - value: The new parameter value (will be clamped to parameter's range)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_device_parameter", {
+            "track_index": track_index,
+            "device_index": device_index,
+            "parameter_index": parameter_index,
+            "value": value
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error setting device parameter: {str(e)}")
+        return f"Error setting device parameter: {str(e)}"
+
+@mcp.tool()
+def clear_clip(ctx: Context, track_index: int, clip_index: int) -> str:
+    """
+    Clear all notes from a MIDI clip without deleting the clip itself.
+
+    Parameters:
+    - track_index: The index of the track containing the clip
+    - clip_index: The index of the clip to clear
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("clear_clip", {
+            "track_index": track_index,
+            "clip_index": clip_index
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error clearing clip: {str(e)}")
+        return f"Error clearing clip: {str(e)}"
+
+@mcp.tool()
+def delete_clip(ctx: Context, track_index: int, clip_index: int) -> str:
+    """
+    Delete a clip from its slot.
+
+    Parameters:
+    - track_index: The index of the track containing the clip
+    - clip_index: The index of the clip to delete
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("delete_clip", {
+            "track_index": track_index,
+            "clip_index": clip_index
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error deleting clip: {str(e)}")
+        return f"Error deleting clip: {str(e)}"
+
+@mcp.tool()
+def remove_notes_from_clip(ctx: Context, track_index: int, clip_index: int, notes_to_remove: list) -> str:
+    """
+    Remove specific notes from a MIDI clip based on criteria.
+
+    Parameters:
+    - track_index: The index of the track containing the clip
+    - clip_index: The index of the clip to modify
+    - notes_to_remove: List of criteria objects, each can have pitch, start_time, velocity, duration
+
+    Example: [{"pitch": 60}, {"velocity": 127, "start_time": 0.5}]
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("remove_notes_from_clip", {
+            "track_index": track_index,
+            "clip_index": clip_index,
+            "notes_to_remove": notes_to_remove
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error removing notes from clip: {str(e)}")
+        return f"Error removing notes from clip: {str(e)}"
+
+@mcp.tool()
+def explore_api(ctx: Context) -> str:
+    """
+    Explore the Ableton Live Python API to discover available methods and capabilities.
+    This is a debugging tool to see what track creation and other methods are available.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("explore_api")
+
+        # Format the results for better readability
+        output = ["=== ABLETON LIVE API EXPLORATION ===\n"]
+
+        if "create_methods" in result:
+            output.append(f"Found {len(result['create_methods'])} create methods:")
+            for method in result["create_methods"]:
+                output.append(f"  - {method}")
+            output.append("")
+
+        if "track_creation_tests" in result:
+            output.append("Track creation method tests:")
+            for method, info in result["track_creation_tests"].items():
+                status = "EXISTS" if info.get("exists", False) else "NOT FOUND"
+                output.append(f"  - {method}: {status}")
+                if info.get("type"):
+                    output.append(f"    Type: {info['type']}")
+            output.append("")
+
+        if "song_methods" in result and result["song_methods"]:
+            output.append(f"Found {len(result['song_methods'])} song methods with 'create':")
+            for method, info in result["song_methods"].items():
+                output.append(f"  - {method}: {info.get('type', 'unknown')}")
+            output.append("")
+
+        if "track_methods" in result and result["track_methods"]:
+            output.append(f"Sample of track methods ({len(result['track_methods'])} total):")
+            for method in list(result["track_methods"].keys())[:15]:
+                output.append(f"  - {method}")
+            output.append("")
+
+        output.append("Check Ableton Live's log for detailed output.")
+
+        return "\n".join(output)
+    except Exception as e:
+        logger.error(f"Error exploring API: {str(e)}")
+        return f"Error exploring API: {str(e)}"
 
 # Main execution
 def main():

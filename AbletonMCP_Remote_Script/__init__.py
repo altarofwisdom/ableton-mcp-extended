@@ -225,11 +225,15 @@ class AbletonMCP(ControlSurface):
             elif command_type == "get_track_info":
                 track_index = params.get("track_index", 0)
                 response["result"] = self._get_track_info(track_index)
+            elif command_type == "explore_api":
+                response["result"] = self._explore_api()
             # Commands that modify Live's state should be scheduled on the main thread
-            elif command_type in ["create_midi_track", "set_track_name", 
-                                 "create_clip", "add_notes_to_clip", "set_clip_name", 
+            elif command_type in ["create_midi_track", "create_audio_track", "set_track_name",
+                                 "create_clip", "add_notes_to_clip", "set_clip_name",
                                  "set_tempo", "fire_clip", "stop_clip",
-                                 "start_playback", "stop_playback", "load_browser_item"]:
+                                 "start_playback", "stop_playback", "load_browser_item",
+                                 "set_track_input_routing", "clear_clip", "delete_clip",
+                                 "remove_notes_from_clip", "set_device_parameter"]:
                 # Use a thread-safe approach with a response queue
                 response_queue = queue.Queue()
                 
@@ -240,6 +244,9 @@ class AbletonMCP(ControlSurface):
                         if command_type == "create_midi_track":
                             index = params.get("index", -1)
                             result = self._create_midi_track(index)
+                        elif command_type == "create_audio_track":
+                            index = params.get("index", -1)
+                            result = self._create_audio_track(index)
                         elif command_type == "set_track_name":
                             track_index = params.get("track_index", 0)
                             name = params.get("name", "")
@@ -282,6 +289,30 @@ class AbletonMCP(ControlSurface):
                             track_index = params.get("track_index", 0)
                             item_uri = params.get("item_uri", "")
                             result = self._load_browser_item(track_index, item_uri)
+                        elif command_type == "set_track_input_routing":
+                            track_index = params.get("track_index", 0)
+                            routing_type = params.get("routing_type", "")
+                            routing_channel = params.get("routing_channel", "")
+                            result = self._set_track_input_routing(track_index, routing_type, routing_channel)
+                        elif command_type == "clear_clip":
+                            track_index = params.get("track_index", 0)
+                            clip_index = params.get("clip_index", 0)
+                            result = self._clear_clip(track_index, clip_index)
+                        elif command_type == "delete_clip":
+                            track_index = params.get("track_index", 0)
+                            clip_index = params.get("clip_index", 0)
+                            result = self._delete_clip(track_index, clip_index)
+                        elif command_type == "remove_notes_from_clip":
+                            track_index = params.get("track_index", 0)
+                            clip_index = params.get("clip_index", 0)
+                            notes_to_remove = params.get("notes_to_remove", [])
+                            result = self._remove_notes_from_clip(track_index, clip_index, notes_to_remove)
+                        elif command_type == "set_device_parameter":
+                            track_index = params.get("track_index", 0)
+                            device_index = params.get("device_index", 0)
+                            parameter_index = params.get("parameter_index", 0)
+                            value = params.get("value", 0.0)
+                            result = self._set_device_parameter(track_index, device_index, parameter_index, value)
                         
                         # Put the result in the queue
                         response_queue.put({"status": "success", "result": result})
@@ -326,6 +357,15 @@ class AbletonMCP(ControlSurface):
             elif command_type == "get_browser_items_at_path":
                 path = params.get("path", "")
                 response["result"] = self.get_browser_items_at_path(path)
+            elif command_type == "get_audio_input_routings":
+                response["result"] = self._get_audio_input_routings()
+            elif command_type == "get_track_input_routings":
+                track_index = params.get("track_index", 0)
+                response["result"] = self._get_track_input_routings(track_index)
+            elif command_type == "get_device_parameters":
+                track_index = params.get("track_index", 0)
+                device_index = params.get("device_index", 0)
+                response["result"] = self._get_device_parameters(track_index, device_index)
             else:
                 response["status"] = "error"
                 response["message"] = "Unknown command: " + command_type
@@ -419,11 +459,11 @@ class AbletonMCP(ControlSurface):
         try:
             # Create the track
             self._song.create_midi_track(index)
-            
+
             # Get the new track
             new_track_index = len(self._song.tracks) - 1 if index == -1 else index
             new_track = self._song.tracks[new_track_index]
-            
+
             result = {
                 "index": new_track_index,
                 "name": new_track.name
@@ -431,6 +471,25 @@ class AbletonMCP(ControlSurface):
             return result
         except Exception as e:
             self.log_message("Error creating MIDI track: " + str(e))
+            raise
+
+    def _create_audio_track(self, index):
+        """Create a new audio track at the specified index"""
+        try:
+            # Create the track
+            self._song.create_audio_track(index)
+
+            # Get the new track
+            new_track_index = len(self._song.tracks) - 1 if index == -1 else index
+            new_track = self._song.tracks[new_track_index]
+
+            result = {
+                "index": new_track_index,
+                "name": new_track.name
+            }
+            return result
+        except Exception as e:
+            self.log_message("Error creating audio track: " + str(e))
             raise
     
     
@@ -726,26 +785,39 @@ class AbletonMCP(ControlSurface):
     def _load_browser_item(self, track_index, item_uri):
         """Load a browser item onto a track by its URI"""
         try:
+            self.log_message("Loading browser item: {0} on track {1}".format(item_uri, track_index))
+
             if track_index < 0 or track_index >= len(self._song.tracks):
                 raise IndexError("Track index out of range")
-            
+
             track = self._song.tracks[track_index]
-            
+            self.log_message("Target track: {0}".format(track.name))
+
             # Access the application's browser instance instead of creating a new one
             app = self.application()
-            
+            if not app:
+                raise RuntimeError("Could not access Live application")
+
+            self.log_message("Starting URI search for: {0}".format(item_uri))
+
             # Find the browser item by URI
             item = self._find_browser_item_by_uri(app.browser, item_uri)
-            
+
             if not item:
+                self.log_message("Browser item search failed for URI: {0}".format(item_uri))
                 raise ValueError("Browser item with URI '{0}' not found".format(item_uri))
-            
+
+            self.log_message("Found browser item: {0}".format(item.name))
+
             # Select the track
             self._song.view.selected_track = track
-            
+            self.log_message("Selected track: {0}".format(track.name))
+
             # Load the item
+            self.log_message("Loading item onto track...")
             app.browser.load_item(item)
-            
+            self.log_message("Item loaded successfully")
+
             result = {
                 "loaded": True,
                 "item_name": item.name,
@@ -771,20 +843,28 @@ class AbletonMCP(ControlSurface):
             
             # Check if this is a browser with root categories
             if hasattr(browser_or_item, 'instruments'):
-                # Check all main categories
-                categories = [
-                    browser_or_item.instruments,
-                    browser_or_item.sounds,
-                    browser_or_item.drums,
-                    browser_or_item.audio_effects,
-                    browser_or_item.midi_effects
-                ]
-                
+                # Check all main categories including plugins
+                categories = []
+
+                # Standard categories
+                standard_cats = ['instruments', 'sounds', 'drums', 'audio_effects', 'midi_effects']
+                for cat_name in standard_cats:
+                    if hasattr(browser_or_item, cat_name):
+                        categories.append(getattr(browser_or_item, cat_name))
+
+                # Check for plugin categories (discovered from API exploration)
+                plugin_cats = ['plugins', 'vst', 'vst3', 'au', 'max_for_live']
+                for cat_name in plugin_cats:
+                    if hasattr(browser_or_item, cat_name):
+                        categories.append(getattr(browser_or_item, cat_name))
+                        self.log_message("Found plugin category: {0}".format(cat_name))
+
                 for category in categories:
-                    item = self._find_browser_item_by_uri(category, uri, max_depth, current_depth + 1)
-                    if item:
-                        return item
-                
+                    if category:  # Make sure category is not None
+                        item = self._find_browser_item_by_uri(category, uri, max_depth, current_depth + 1)
+                        if item:
+                            return item
+
                 return None
             
             # Check if this item has children
@@ -1058,5 +1138,629 @@ class AbletonMCP(ControlSurface):
             
         except Exception as e:
             self.log_message("Error getting browser items at path: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _explore_api(self):
+        """
+        Comprehensive exploration of the Live API - dump ALL available methods and properties
+        """
+        try:
+            result = {
+                "song_all_methods": {},
+                "song_callable_methods": {},
+                "track_all_methods": {},
+                "track_callable_methods": {},
+                "master_track_methods": {},
+                "return_track_methods": {},
+                "application_methods": {},
+                "browser_methods": {},
+                "clip_methods": {},
+                "device_methods": {}
+            }
+
+            self.log_message("=== COMPREHENSIVE API EXPLORATION ===")
+
+            # Explore ALL song object methods and properties
+            song_all = [m for m in dir(self._song) if not m.startswith('_')]
+            self.log_message("=== ALL SONG METHODS/PROPERTIES ({0} total) ===".format(len(song_all)))
+
+            for method in song_all:
+                try:
+                    method_obj = getattr(self._song, method)
+                    method_info = {
+                        "type": str(type(method_obj)),
+                        "callable": callable(method_obj)
+                    }
+                    result["song_all_methods"][method] = method_info
+
+                    if callable(method_obj):
+                        result["song_callable_methods"][method] = method_info
+                        self.log_message("SONG CALLABLE: {0} - {1}".format(method, method_info["type"]))
+                    else:
+                        self.log_message("SONG PROPERTY: {0} - {1}".format(method, method_info["type"]))
+
+                except Exception as e:
+                    self.log_message("ERROR inspecting song.{0}: {1}".format(method, str(e)))
+
+            # Explore track object methods if tracks exist
+            if len(self._song.tracks) > 0:
+                track = self._song.tracks[0]
+                track_all = [m for m in dir(track) if not m.startswith('_')]
+                self.log_message("=== ALL TRACK METHODS/PROPERTIES ({0} total) ===".format(len(track_all)))
+
+                for method in track_all:
+                    try:
+                        method_obj = getattr(track, method)
+                        method_info = {
+                            "type": str(type(method_obj)),
+                            "callable": callable(method_obj)
+                        }
+                        result["track_all_methods"][method] = method_info
+
+                        if callable(method_obj):
+                            result["track_callable_methods"][method] = method_info
+                            self.log_message("TRACK CALLABLE: {0} - {1}".format(method, method_info["type"]))
+
+                    except Exception as e:
+                        self.log_message("ERROR inspecting track.{0}: {1}".format(method, str(e)))
+
+            # Explore master track
+            master_track = self._song.master_track
+            master_all = [m for m in dir(master_track) if not m.startswith('_')]
+            self.log_message("=== MASTER TRACK METHODS ({0} total) ===".format(len(master_all)))
+
+            for method in master_all[:20]:  # Limit output
+                try:
+                    method_obj = getattr(master_track, method)
+                    if callable(method_obj):
+                        result["master_track_methods"][method] = str(type(method_obj))
+                        self.log_message("MASTER CALLABLE: {0}".format(method))
+                except:
+                    pass
+
+            # Explore return tracks if they exist
+            if len(self._song.return_tracks) > 0:
+                return_track = self._song.return_tracks[0]
+                return_all = [m for m in dir(return_track) if not m.startswith('_')]
+                self.log_message("=== RETURN TRACK METHODS ({0} total) ===".format(len(return_all)))
+
+                for method in return_all[:20]:  # Limit output
+                    try:
+                        method_obj = getattr(return_track, method)
+                        if callable(method_obj):
+                            result["return_track_methods"][method] = str(type(method_obj))
+                            self.log_message("RETURN CALLABLE: {0}".format(method))
+                    except:
+                        pass
+
+            # Explore application object
+            try:
+                app = self.application()
+                if app:
+                    app_all = [m for m in dir(app) if not m.startswith('_')]
+                    self.log_message("=== APPLICATION METHODS ({0} total) ===".format(len(app_all)))
+
+                    for method in app_all:
+                        try:
+                            method_obj = getattr(app, method)
+                            if callable(method_obj):
+                                result["application_methods"][method] = str(type(method_obj))
+                                self.log_message("APP CALLABLE: {0}".format(method))
+                        except:
+                            pass
+            except Exception as e:
+                self.log_message("Could not explore application: {0}".format(str(e)))
+
+            # Explore browser if available
+            try:
+                app = self.application()
+                if app and hasattr(app, 'browser') and app.browser:
+                    browser_all = [m for m in dir(app.browser) if not m.startswith('_')]
+                    self.log_message("=== BROWSER METHODS ({0} total) ===".format(len(browser_all)))
+
+                    for method in browser_all:
+                        try:
+                            method_obj = getattr(app.browser, method)
+                            if callable(method_obj):
+                                result["browser_methods"][method] = str(type(method_obj))
+                                self.log_message("BROWSER CALLABLE: {0}".format(method))
+                        except:
+                            pass
+            except Exception as e:
+                self.log_message("Could not explore browser: {0}".format(str(e)))
+
+            # Explore clip methods if any clips exist
+            try:
+                for track in self._song.tracks:
+                    for slot in track.clip_slots:
+                        if slot.has_clip:
+                            clip = slot.clip
+                            clip_all = [m for m in dir(clip) if not m.startswith('_')]
+                            self.log_message("=== CLIP METHODS ({0} total) ===".format(len(clip_all)))
+
+                            for method in clip_all[:20]:  # Limit output
+                                try:
+                                    method_obj = getattr(clip, method)
+                                    if callable(method_obj):
+                                        result["clip_methods"][method] = str(type(method_obj))
+                                        self.log_message("CLIP CALLABLE: {0}".format(method))
+                                except:
+                                    pass
+                            break
+                    if result["clip_methods"]:
+                        break
+            except Exception as e:
+                self.log_message("Could not explore clips: {0}".format(str(e)))
+
+            # Explore device methods if any devices exist
+            try:
+                for track in self._song.tracks:
+                    if len(track.devices) > 0:
+                        device = track.devices[0]
+                        device_all = [m for m in dir(device) if not m.startswith('_')]
+                        self.log_message("=== DEVICE METHODS ({0} total) ===".format(len(device_all)))
+
+                        for method in device_all[:20]:  # Limit output
+                            try:
+                                method_obj = getattr(device, method)
+                                if callable(method_obj):
+                                    result["device_methods"][method] = str(type(method_obj))
+                                    self.log_message("DEVICE CALLABLE: {0}".format(method))
+                            except:
+                                pass
+                        break
+            except Exception as e:
+                self.log_message("Could not explore devices: {0}".format(str(e)))
+
+            self.log_message("=== COMPREHENSIVE API EXPLORATION COMPLETE ===")
+            self.log_message("Total song methods: {0}".format(len(result["song_all_methods"])))
+            self.log_message("Total song callables: {0}".format(len(result["song_callable_methods"])))
+            self.log_message("Total track methods: {0}".format(len(result["track_all_methods"])))
+            self.log_message("Total track callables: {0}".format(len(result["track_callable_methods"])))
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error during comprehensive API exploration: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            return {"error": str(e)}
+
+    def _get_audio_input_routings(self):
+        """Get available audio input routings for the current audio interface"""
+        try:
+            # Look at the first audio track to get available input routings
+            audio_tracks = [track for track in self._song.tracks if track.has_audio_input]
+
+            if not audio_tracks:
+                return {
+                    "error": "No audio tracks found. Create an audio track first.",
+                    "available_types": [],
+                    "available_channels": {}
+                }
+
+            track = audio_tracks[0]
+
+            result = {
+                "available_routing_types": [],
+                "available_channels": {},
+                "current_routing": {}
+            }
+
+            # Get available input routing types
+            if hasattr(track, 'available_input_routing_types'):
+                routing_types = list(track.available_input_routing_types)
+                result["available_routing_types"] = [str(rt) for rt in routing_types]
+
+                # For each routing type, get available channels
+                for routing_type in routing_types:
+                    try:
+                        # Temporarily set the routing type to get available channels
+                        original_routing = track.current_input_routing
+                        track.current_input_routing = routing_type
+
+                        if hasattr(track, 'available_input_routing_channels'):
+                            channels = list(track.available_input_routing_channels)
+                            result["available_channels"][str(routing_type)] = [str(ch) for ch in channels]
+
+                        # Restore original routing
+                        track.current_input_routing = original_routing
+                    except Exception as e:
+                        self.log_message("Error getting channels for routing type {0}: {1}".format(str(routing_type), str(e)))
+                        result["available_channels"][str(routing_type)] = []
+
+            # Get current routing info
+            if hasattr(track, 'current_input_routing'):
+                result["current_routing"]["type"] = str(track.current_input_routing)
+
+            if hasattr(track, 'input_routing_channel'):
+                result["current_routing"]["channel"] = str(track.input_routing_channel)
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error getting audio input routings: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            return {"error": str(e)}
+
+    def _get_track_input_routings(self, track_index):
+        """Get input routing information for a specific track"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if not track.has_audio_input:
+                return {
+                    "error": "Track is not an audio track",
+                    "track_name": track.name,
+                    "is_audio_track": False
+                }
+
+            result = {
+                "track_index": track_index,
+                "track_name": track.name,
+                "is_audio_track": True,
+                "available_routing_types": [],
+                "available_channels": [],
+                "current_routing": {}
+            }
+
+            # Get available input routing types for this track
+            if hasattr(track, 'available_input_routing_types'):
+                routing_types = list(track.available_input_routing_types)
+                result["available_routing_types"] = [str(rt) for rt in routing_types]
+
+            # Get available input channels for current routing type
+            if hasattr(track, 'available_input_routing_channels'):
+                channels = list(track.available_input_routing_channels)
+                result["available_channels"] = [str(ch) for ch in channels]
+
+            # Get current input routing
+            if hasattr(track, 'current_input_routing'):
+                result["current_routing"]["type"] = str(track.current_input_routing)
+
+            if hasattr(track, 'input_routing_channel'):
+                result["current_routing"]["channel"] = str(track.input_routing_channel)
+
+            # Get input routing details if available
+            if hasattr(track, 'input_routings'):
+                result["all_input_routings"] = [str(r) for r in track.input_routings]
+
+            if hasattr(track, 'input_sub_routings'):
+                result["input_sub_routings"] = [str(r) for r in track.input_sub_routings]
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error getting track input routings: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            return {"error": str(e)}
+
+    def _set_track_input_routing(self, track_index, routing_type, routing_channel):
+        """Set input routing for a track"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if not track.has_audio_input:
+                raise ValueError("Track is not an audio track")
+
+            result = {
+                "track_index": track_index,
+                "track_name": track.name,
+                "success": False
+            }
+
+            # Set the routing type if provided
+            if routing_type and hasattr(track, 'current_input_routing'):
+                # Find the routing type object
+                available_types = list(track.available_input_routing_types)
+                routing_obj = None
+
+                for rt in available_types:
+                    if str(rt) == routing_type:
+                        routing_obj = rt
+                        break
+
+                if routing_obj:
+                    track.current_input_routing = routing_obj
+                    result["routing_type_set"] = str(routing_obj)
+                else:
+                    raise ValueError("Routing type '{0}' not found in available types: {1}".format(
+                        routing_type, [str(rt) for rt in available_types]))
+
+            # Set the routing channel if provided
+            if routing_channel and hasattr(track, 'input_routing_channel'):
+                # Find the channel object
+                available_channels = list(track.available_input_routing_channels)
+                channel_obj = None
+
+                self.log_message("Looking for routing channel: '{0}'".format(routing_channel))
+                self.log_message("Available channels: {0}".format([str(ch) for ch in available_channels]))
+
+                # Try exact match first
+                for ch in available_channels:
+                    if str(ch) == routing_channel:
+                        channel_obj = ch
+                        break
+
+                # If exact match fails, try partial match (for named channels like "3/4 Digitakt")
+                if not channel_obj:
+                    for ch in available_channels:
+                        if routing_channel in str(ch) or str(ch).startswith(routing_channel):
+                            channel_obj = ch
+                            self.log_message("Found partial match: '{0}' for '{1}'".format(str(ch), routing_channel))
+                            break
+
+                if channel_obj:
+                    track.input_routing_channel = channel_obj
+                    result["routing_channel_set"] = str(channel_obj)
+                    self.log_message("Successfully set routing channel to: '{0}'".format(str(channel_obj)))
+                else:
+                    available_list = [str(ch) for ch in available_channels]
+                    self.log_message("Channel not found. Available: {0}".format(available_list))
+                    raise ValueError("Routing channel '{0}' not found in available channels: {1}".format(
+                        routing_channel, available_list))
+
+            result["success"] = True
+
+            # Return current state
+            if hasattr(track, 'current_input_routing'):
+                result["current_routing_type"] = str(track.current_input_routing)
+
+            if hasattr(track, 'input_routing_channel'):
+                result["current_routing_channel"] = str(track.input_routing_channel)
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error setting track input routing: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _get_device_parameters(self, track_index, device_index):
+        """Get detailed information about a device's parameters"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index {0} out of range (0-{1})".format(track_index, len(self._song.tracks) - 1))
+
+            track = self._song.tracks[track_index]
+
+            if device_index < 0 or device_index >= len(track.devices):
+                raise IndexError("Device index {0} out of range (0-{1})".format(device_index, len(track.devices) - 1))
+
+            device = track.devices[device_index]
+
+            # Get device info
+            device_info = {
+                "name": device.name,
+                "class_name": device.class_name,
+                "can_have_chains": device.can_have_chains,
+                "can_have_drum_pads": device.can_have_drum_pads,
+                "parameters": []
+            }
+
+            # Get all parameters
+            for i, param in enumerate(device.parameters):
+                param_info = {
+                    "index": i,
+                    "name": param.name,
+                    "display_name": param.original_name,
+                    "value": param.value,
+                    "min": param.min,
+                    "max": param.max,
+                    "is_enabled": param.is_enabled,
+                    "is_quantized": param.is_quantized,
+                    "value_items": []
+                }
+
+                # Get quantized value items if available
+                if param.is_quantized and hasattr(param, 'value_items'):
+                    param_info["value_items"] = list(param.value_items)
+
+                # Add string representation of current value
+                try:
+                    param_info["str_value"] = str(param)
+                except:
+                    param_info["str_value"] = "N/A"
+
+                device_info["parameters"].append(param_info)
+
+            return device_info
+
+        except Exception as e:
+            self.log_message("Error getting device parameters: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _set_device_parameter(self, track_index, device_index, parameter_index, value):
+        """Set a device parameter value"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index {0} out of range (0-{1})".format(track_index, len(self._song.tracks) - 1))
+
+            track = self._song.tracks[track_index]
+
+            if device_index < 0 or device_index >= len(track.devices):
+                raise IndexError("Device index {0} out of range (0-{1})".format(device_index, len(track.devices) - 1))
+
+            device = track.devices[device_index]
+
+            if parameter_index < 0 or parameter_index >= len(device.parameters):
+                raise IndexError("Parameter index {0} out of range (0-{1})".format(parameter_index, len(device.parameters) - 1))
+
+            param = device.parameters[parameter_index]
+
+            # Store original value for comparison
+            original_value = param.value
+
+            # Clamp value to parameter range
+            clamped_value = max(param.min, min(param.max, float(value)))
+
+            # Set the parameter value
+            param.value = clamped_value
+
+            result = {
+                "device_name": device.name,
+                "parameter_name": param.name,
+                "original_value": original_value,
+                "requested_value": value,
+                "actual_value": param.value,
+                "min": param.min,
+                "max": param.max,
+                "success": True
+            }
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error setting device parameter: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _clear_clip(self, track_index, clip_index):
+        """Clear all notes from a clip without deleting the clip"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if clip_index < 0 or clip_index >= len(track.clip_slots):
+                raise IndexError("Clip index out of range")
+
+            clip_slot = track.clip_slots[clip_index]
+
+            if not clip_slot.has_clip:
+                raise ValueError("No clip found at slot {0}".format(clip_index))
+
+            clip = clip_slot.clip
+
+            if not clip.is_midi_clip:
+                raise ValueError("Can only clear notes from MIDI clips")
+
+            # Remove all notes from the clip
+            clip.remove_notes(0, 0, clip.length, 127)
+
+            result = {
+                "track_name": track.name,
+                "clip_name": clip.name,
+                "clip_length": clip.length,
+                "cleared": True
+            }
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error clearing clip: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _delete_clip(self, track_index, clip_index):
+        """Delete a clip from its slot"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if clip_index < 0 or clip_index >= len(track.clip_slots):
+                raise IndexError("Clip index out of range")
+
+            clip_slot = track.clip_slots[clip_index]
+
+            if not clip_slot.has_clip:
+                raise ValueError("No clip found at slot {0}".format(clip_index))
+
+            clip_name = clip_slot.clip.name
+
+            # Delete the clip
+            clip_slot.delete_clip()
+
+            result = {
+                "track_name": track.name,
+                "clip_name": clip_name,
+                "clip_index": clip_index,
+                "deleted": True
+            }
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error deleting clip: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _remove_notes_from_clip(self, track_index, clip_index, notes_to_remove):
+        """Remove specific notes from a clip based on criteria"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if clip_index < 0 or clip_index >= len(track.clip_slots):
+                raise IndexError("Clip index out of range")
+
+            clip_slot = track.clip_slots[clip_index]
+
+            if not clip_slot.has_clip:
+                raise ValueError("No clip found at slot {0}".format(clip_index))
+
+            clip = clip_slot.clip
+
+            if not clip.is_midi_clip:
+                raise ValueError("Can only remove notes from MIDI clips")
+
+            removed_count = 0
+
+            # Process each note removal criterion
+            for note_criteria in notes_to_remove:
+                pitch = note_criteria.get("pitch", None)
+                start_time = note_criteria.get("start_time", None)
+                velocity = note_criteria.get("velocity", None)
+                duration = note_criteria.get("duration", None)
+
+                # Get all notes in the clip
+                notes = clip.get_notes(0, 0, clip.length, 127)
+
+                notes_to_remove_list = []
+
+                for note in notes:
+                    should_remove = True
+
+                    # Check each criterion
+                    if pitch is not None and note.pitch != pitch:
+                        should_remove = False
+                    if start_time is not None and abs(note.start_time - start_time) > 0.001:
+                        should_remove = False
+                    if velocity is not None and note.velocity != velocity:
+                        should_remove = False
+                    if duration is not None and abs(note.duration - duration) > 0.001:
+                        should_remove = False
+
+                    if should_remove:
+                        notes_to_remove_list.append(note)
+
+                # Remove the matching notes
+                if notes_to_remove_list:
+                    clip.remove_notes_extended(notes_to_remove_list)
+                    removed_count += len(notes_to_remove_list)
+
+            result = {
+                "track_name": track.name,
+                "clip_name": clip.name,
+                "removed_count": removed_count,
+                "criteria_count": len(notes_to_remove)
+            }
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error removing notes from clip: {0}".format(str(e)))
             self.log_message(traceback.format_exc())
             raise
