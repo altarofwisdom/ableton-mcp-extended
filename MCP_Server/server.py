@@ -828,6 +828,151 @@ def remove_notes_from_clip(ctx: Context, track_index: int, clip_index: int, note
         return f"Error removing notes from clip: {str(e)}"
 
 @mcp.tool()
+def delete_device(ctx: Context, track_index: int, device_index: int) -> str:
+    """
+    Delete a device from a track.
+
+    Parameters:
+    - track_index: The index of the track containing the device
+    - device_index: The index of the device to delete (0 = first device)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("delete_device", {
+            "track_index": track_index,
+            "device_index": device_index
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error deleting device: {str(e)}")
+        return f"Error deleting device: {str(e)}"
+
+@mcp.tool()
+def get_cached_devices(ctx: Context, device_type: str = "") -> str:
+    """
+    Get cached devices/plugins for fast access. Cache persists until manually refreshed.
+
+    Parameters:
+    - device_type: Specific type to get (vst3_plugins, instruments, audio_effects,
+      midi_effects, m4l_instruments, m4l_audio_effects, m4l_midi_effects, drum_racks)
+      Leave empty to get all types
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_cached_devices", {
+            "device_type": device_type if device_type else None
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting cached devices: {str(e)}")
+        return f"Error getting cached devices: {str(e)}"
+
+@mcp.tool()
+def refresh_device_cache(ctx: Context) -> str:
+    """
+    Force refresh of the device/plugin cache. Use this when you install new plugins
+    or want to update the available devices list.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("refresh_device_cache")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error refreshing device cache: {str(e)}")
+        return f"Error refreshing device cache: {str(e)}"
+
+@mcp.tool()
+def get_device_cache_status(ctx: Context) -> str:
+    """
+    Get information about the device cache status including what's cached and when it was built.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_device_cache_status")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting device cache status: {str(e)}")
+        return f"Error getting device cache status: {str(e)}"
+
+@mcp.tool()
+def clear_device_cache_file(ctx: Context) -> str:
+    """
+    Clear the device cache file from disk and reset the in-memory cache.
+    This will force a complete rebuild of the device cache on next access.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("clear_device_cache_file")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error clearing device cache file: {str(e)}")
+        return f"Error clearing device cache file: {str(e)}"
+
+@mcp.tool()
+def search_cached_devices(ctx: Context, search_term: str, category: str = None, max_results: int = 50) -> str:
+    """
+    Search for devices in the cache by name with intelligent matching.
+
+    Parameters:
+    - search_term: The device name or partial name to search for (case-insensitive)
+    - category: Optional category to restrict search ("vst3_plugins", "instruments", "audio_effects", etc.)
+    - max_results: Maximum number of results to return (default: 50)
+
+    Returns a ranked list of matching devices with their URIs for easy loading.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("search_cached_devices", {
+            "search_term": search_term,
+            "category": category,
+            "max_results": max_results
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error searching cached devices: {str(e)}")
+        return f"Error searching cached devices: {str(e)}"
+
+@mcp.tool()
+def get_places(ctx: Context) -> str:
+    """
+    Get the list of Places (user-added folders) from Ableton's browser.
+    Places are custom locations that users have added to their browser for quick access.
+
+    Returns information about available places including their names, URIs, and attributes.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_places")
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting places: {str(e)}")
+        return f"Error getting places: {str(e)}"
+
+@mcp.tool()
+def browse_place(ctx: Context, place_index: int = None, place_uri: str = None, path: str = "") -> str:
+    """
+    Browse the contents of a specific Place (user-added folder).
+
+    Parameters:
+    - place_index: The index of the place to browse (from get_places results)
+    - place_uri: Alternative way to specify place by URI
+    - path: Optional sub-path within the place to navigate to (e.g., "Samples/Drums")
+
+    Specify either place_index OR place_uri, not both.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("browse_place", {
+            "place_index": place_index,
+            "place_uri": place_uri,
+            "path": path
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error browsing place: {str(e)}")
+        return f"Error browsing place: {str(e)}"
+
+@mcp.tool()
 def explore_api(ctx: Context) -> str:
     """
     Explore the Ableton Live Python API to discover available methods and capabilities.

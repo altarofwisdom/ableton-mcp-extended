@@ -38,7 +38,40 @@ class AbletonMCP(ControlSurface):
         
         # Cache the song reference for easier access
         self._song = self.song()
-        
+
+        # Initialize comprehensive device/plugin cache
+        self._device_cache = {
+            # VST/AU Plugins
+            "vst3_plugins": None,
+            "vst_plugins": None,
+            "au_plugins": None,
+
+            # Native Ableton devices
+            "instruments": None,
+            "audio_effects": None,
+            "midi_effects": None,
+
+            # Max for Live devices
+            "m4l_instruments": None,
+            "m4l_audio_effects": None,
+            "m4l_midi_effects": None,
+
+            # Drum racks (samples excluded - too large)
+            "drum_racks": None,
+
+            # Cache metadata
+            "last_updated": 0,
+            "is_built": False,
+            "is_building": False,
+            "cache_version": "1.0"
+        }
+
+        # Set up cache file path
+        self._cache_file_path = self._get_cache_file_path()
+
+        # Load existing cache on startup
+        self._load_cache_from_file()
+
         # Start the socket server
         self.start_server()
         
@@ -233,7 +266,7 @@ class AbletonMCP(ControlSurface):
                                  "set_tempo", "fire_clip", "stop_clip",
                                  "start_playback", "stop_playback", "load_browser_item",
                                  "set_track_input_routing", "clear_clip", "delete_clip",
-                                 "remove_notes_from_clip", "set_device_parameter"]:
+                                 "remove_notes_from_clip", "set_device_parameter", "delete_device"]:
                 # Use a thread-safe approach with a response queue
                 response_queue = queue.Queue()
                 
@@ -313,6 +346,10 @@ class AbletonMCP(ControlSurface):
                             parameter_index = params.get("parameter_index", 0)
                             value = params.get("value", 0.0)
                             result = self._set_device_parameter(track_index, device_index, parameter_index, value)
+                        elif command_type == "delete_device":
+                            track_index = params.get("track_index", 0)
+                            device_index = params.get("device_index", 0)
+                            result = self._delete_device(track_index, device_index)
                         
                         # Put the result in the queue
                         response_queue.put({"status": "success", "result": result})
@@ -366,6 +403,31 @@ class AbletonMCP(ControlSurface):
                 track_index = params.get("track_index", 0)
                 device_index = params.get("device_index", 0)
                 response["result"] = self._get_device_parameters(track_index, device_index)
+            elif command_type == "get_cached_devices":
+                device_type = params.get("device_type", None)
+                response["result"] = self._get_cached_devices(device_type)
+            elif command_type == "refresh_device_cache":
+                response["result"] = self._refresh_device_cache()
+            elif command_type == "get_device_cache_status":
+                response["result"] = self._get_device_cache_status()
+            elif command_type == "clear_device_cache_file":
+                self._clear_cache_file()
+                # Also reset in-memory cache
+                self._device_cache["is_built"] = False
+                self._device_cache["last_updated"] = 0
+                response["result"] = {"status": "Cache file cleared successfully"}
+            elif command_type == "search_cached_devices":
+                search_term = params.get("search_term", "")
+                category = params.get("category", None)
+                max_results = params.get("max_results", 50)
+                response["result"] = self._search_cached_devices(search_term, category, max_results)
+            elif command_type == "get_places":
+                response["result"] = self._get_places()
+            elif command_type == "browse_place":
+                place_index = params.get("place_index", None)
+                place_uri = params.get("place_uri", None)
+                path = params.get("path", "")
+                response["result"] = self._browse_place(place_index, place_uri, path)
             else:
                 response["status"] = "error"
                 response["message"] = "Unknown command: " + command_type
@@ -798,10 +860,28 @@ class AbletonMCP(ControlSurface):
             if not app:
                 raise RuntimeError("Could not access Live application")
 
-            self.log_message("Starting URI search for: {0}".format(item_uri))
+            # Decode URL-encoded URI (e.g., %20 -> space)
+            try:
+                import urllib
+                if hasattr(urllib, 'unquote'):
+                    # Python 2
+                    decoded_uri = urllib.unquote(item_uri)
+                else:
+                    # Python 3
+                    from urllib.parse import unquote
+                    decoded_uri = unquote(item_uri)
+                self.log_message("Decoded URI: {0} -> {1}".format(item_uri, decoded_uri))
+            except:
+                decoded_uri = item_uri
+                self.log_message("Could not decode URI, using original: {0}".format(item_uri))
 
-            # Find the browser item by URI
-            item = self._find_browser_item_by_uri(app.browser, item_uri)
+            self.log_message("Starting URI search for: {0}".format(decoded_uri))
+
+            # Find the browser item by URI (try both encoded and decoded)
+            item = self._find_browser_item_by_uri(app.browser, decoded_uri)
+            if not item:
+                self.log_message("Decoded URI failed, trying original: {0}".format(item_uri))
+                item = self._find_browser_item_by_uri(app.browser, item_uri)
 
             if not item:
                 self.log_message("Browser item search failed for URI: {0}".format(item_uri))
@@ -834,8 +914,34 @@ class AbletonMCP(ControlSurface):
         """Find a browser item by its URI"""
         try:
             # Check if this is the item we're looking for
-            if hasattr(browser_or_item, 'uri') and browser_or_item.uri == uri:
-                return browser_or_item
+            if hasattr(browser_or_item, 'uri'):
+                item_uri = browser_or_item.uri
+                # Try exact match first
+                if item_uri == uri:
+                    return browser_or_item
+
+                # Try URL decoded comparison for encoded URIs
+                try:
+                    import urllib
+                    if hasattr(urllib, 'unquote'):
+                        # Python 2
+                        decoded_item_uri = urllib.unquote(item_uri)
+                        decoded_search_uri = urllib.unquote(uri)
+                    else:
+                        # Python 3
+                        from urllib.parse import unquote
+                        decoded_item_uri = unquote(item_uri)
+                        decoded_search_uri = unquote(uri)
+
+                    if decoded_item_uri == decoded_search_uri:
+                        return browser_or_item
+
+                    # Also try cross-comparison (encoded vs decoded)
+                    if item_uri == decoded_search_uri or decoded_item_uri == uri:
+                        return browser_or_item
+
+                except:
+                    pass
             
             # Stop recursion if we've reached max depth
             if current_depth >= max_depth:
@@ -1764,3 +1870,542 @@ class AbletonMCP(ControlSurface):
             self.log_message("Error removing notes from clip: {0}".format(str(e)))
             self.log_message(traceback.format_exc())
             raise
+
+    def _delete_device(self, track_index, device_index):
+        """Delete a device from a track"""
+        try:
+            if track_index < 0 or track_index >= len(self._song.tracks):
+                raise IndexError("Track index out of range")
+
+            track = self._song.tracks[track_index]
+
+            if device_index < 0 or device_index >= len(track.devices):
+                raise IndexError("Device index out of range")
+
+            device = track.devices[device_index]
+            device_name = device.name
+            device_class = device.class_name
+
+            # Delete the device using the track's delete_device method
+            track.delete_device(device_index)
+
+            result = {
+                "track_name": track.name,
+                "track_index": track_index,
+                "device_name": device_name,
+                "device_class": device_class,
+                "device_index": device_index,
+                "deleted": True,
+                "remaining_devices": len(track.devices)
+            }
+
+            self.log_message("Deleted device '{0}' from track '{1}'".format(device_name, track.name))
+
+            return result
+
+        except Exception as e:
+            self.log_message("Error deleting device: {0}".format(str(e)))
+            self.log_message(traceback.format_exc())
+            raise
+
+    def _is_cache_built(self):
+        """Check if the device cache has been built"""
+        return self._device_cache["is_built"] and not self._device_cache["is_building"]
+
+    def _build_device_cache(self):
+        """Build comprehensive cache of all available devices and plugins"""
+        if self._device_cache["is_building"]:
+            return self._device_cache
+
+        try:
+            import time
+            self._device_cache["is_building"] = True
+            self.log_message("Building comprehensive device cache...")
+
+            app = self.application()
+            if not app or not app.browser:
+                return self._device_cache
+
+            browser = app.browser
+
+            # Cache VST3 plugins
+            if hasattr(browser, 'plugins'):
+                self._device_cache["vst3_plugins"] = self._extract_browser_items(browser.plugins, "VST3")
+                self._device_cache["vst_plugins"] = self._extract_browser_items(browser.plugins, "VST")
+                self._device_cache["au_plugins"] = self._extract_browser_items(browser.plugins, "AU")
+
+            # Cache native instruments
+            if hasattr(browser, 'instruments'):
+                self._device_cache["instruments"] = self._extract_browser_items(browser.instruments, "Instruments")
+
+            # Cache audio effects
+            if hasattr(browser, 'audio_effects'):
+                self._device_cache["audio_effects"] = self._extract_browser_items(browser.audio_effects, "Audio Effects")
+
+            # Cache MIDI effects
+            if hasattr(browser, 'midi_effects'):
+                self._device_cache["midi_effects"] = self._extract_browser_items(browser.midi_effects, "MIDI Effects")
+
+            # Cache Max for Live devices
+            if hasattr(browser, 'max_for_live'):
+                m4l_devices = self._extract_browser_items(browser.max_for_live, "Max for Live")
+                # Separate M4L by type
+                self._device_cache["m4l_instruments"] = [d for d in m4l_devices if "instrument" in d.get("path", "").lower()]
+                self._device_cache["m4l_audio_effects"] = [d for d in m4l_devices if "audio" in d.get("path", "").lower()]
+                self._device_cache["m4l_midi_effects"] = [d for d in m4l_devices if "midi" in d.get("path", "").lower()]
+
+            # Cache drum racks only (samples excluded - too large)
+            if hasattr(browser, 'drums'):
+                self._device_cache["drum_racks"] = self._extract_browser_items(browser.drums, "Drums")
+
+            # Update cache status
+            self._device_cache["last_updated"] = time.time()
+            self._device_cache["is_built"] = True
+            self._device_cache["is_building"] = False
+
+            self.log_message("Device cache built successfully:")
+            for key, value in self._device_cache.items():
+                if isinstance(value, list):
+                    self.log_message("  {0}: {1} items".format(key, len(value)))
+
+            # Save cache to file
+            self._save_cache_to_file()
+
+            return self._device_cache
+
+        except Exception as e:
+            self._device_cache["is_building"] = False
+            self.log_message("Error building device cache: {0}".format(str(e)))
+            return self._device_cache
+
+    def _extract_browser_items(self, browser_category, category_type, max_depth=3):
+        """Recursively extract all items from a browser category"""
+        items = []
+        try:
+            def extract_recursive(item, current_path="", depth=0):
+                if depth > max_depth:
+                    return
+
+                try:
+                    if hasattr(item, 'children') and item.children:
+                        # This is a folder
+                        for child in item.children:
+                            child_path = "{0}/{1}".format(current_path, child.name) if current_path else child.name
+                            extract_recursive(child, child_path, depth + 1)
+                    elif hasattr(item, 'is_loadable') and item.is_loadable:
+                        # This is a loadable item
+                        item_info = {
+                            "name": item.name,
+                            "path": current_path,
+                            "uri": item.uri if hasattr(item, 'uri') else None,
+                            "is_device": item.is_device if hasattr(item, 'is_device') else False,
+                            "category": category_type
+                        }
+                        items.append(item_info)
+                except Exception as e:
+                    self.log_message("Error extracting item {0}: {1}".format(getattr(item, 'name', 'unknown'), str(e)))
+
+            # Start extraction
+            if hasattr(browser_category, 'children'):
+                for child in browser_category.children:
+                    extract_recursive(child, child.name)
+            else:
+                extract_recursive(browser_category)
+
+        except Exception as e:
+            self.log_message("Error extracting {0}: {1}".format(category_type, str(e)))
+
+        return items
+
+    def _get_cached_devices(self, device_type=None):
+        """Get devices from cache, building if necessary"""
+        # Build cache if not built yet
+        if not self._is_cache_built():
+            self._build_device_cache()
+
+        if device_type:
+            return self._device_cache.get(device_type, [])
+        else:
+            # Return all cached devices
+            result = {}
+            for key, value in self._device_cache.items():
+                if isinstance(value, list):
+                    result[key] = value
+            return result
+
+    def _refresh_device_cache(self):
+        """Force refresh of the device cache"""
+        self._device_cache["is_built"] = False
+        self._device_cache["last_updated"] = 0
+        return self._build_device_cache()
+
+    def _get_device_cache_status(self):
+        """Get status information about the device cache"""
+        import time
+        current_time = time.time()
+
+        status = {
+            "is_built": self._device_cache["is_built"],
+            "is_building": self._device_cache["is_building"],
+            "last_updated": self._device_cache["last_updated"],
+            "age_seconds": current_time - self._device_cache["last_updated"] if self._device_cache["last_updated"] > 0 else -1,
+            "cached_categories": {}
+        }
+
+        # Count items in each category
+        for key, value in self._device_cache.items():
+            if isinstance(value, list):
+                status["cached_categories"][key] = len(value)
+
+        return status
+
+    def _get_cache_file_path(self):
+        """Get the path for the device cache file"""
+        try:
+            import os
+
+            # Use Ableton's preferences directory
+            home_dir = os.path.expanduser("~")
+            cache_dir = os.path.join(home_dir, "Library", "Preferences", "Ableton", "Live 12.2", "AbletonMCP")
+
+            # Create directory if it doesn't exist
+            if not os.path.exists(cache_dir):
+                os.makedirs(cache_dir)
+                self.log_message("Created cache directory: {0}".format(cache_dir))
+
+            cache_file = os.path.join(cache_dir, "device_cache.json")
+            self.log_message("Cache file path: {0}".format(cache_file))
+            return cache_file
+
+        except Exception as e:
+            self.log_message("Error setting up cache file path: {0}".format(str(e)))
+            return None
+
+    def _load_cache_from_file(self):
+        """Load device cache from file if it exists"""
+        if not self._cache_file_path:
+            return
+
+        try:
+            import os
+            import json
+
+            if os.path.exists(self._cache_file_path):
+                with open(self._cache_file_path, 'r') as f:
+                    cached_data = json.load(f)
+
+                # Verify cache version compatibility
+                if cached_data.get("cache_version") == self._device_cache["cache_version"]:
+                    # Update our cache with loaded data
+                    for key, value in cached_data.items():
+                        if key in self._device_cache:
+                            self._device_cache[key] = value
+
+                    self.log_message("Loaded device cache from file: {0} categories".format(
+                        len([k for k, v in self._device_cache.items() if isinstance(v, list)])))
+                    self.log_message("Cache age: {0}".format(
+                        self._device_cache.get("last_updated", "unknown")))
+                else:
+                    self.log_message("Cache version mismatch, will rebuild")
+
+            else:
+                self.log_message("No existing cache file found")
+
+        except Exception as e:
+            self.log_message("Error loading cache from file: {0}".format(str(e)))
+
+    def _save_cache_to_file(self):
+        """Save device cache to file"""
+        if not self._cache_file_path:
+            return
+
+        try:
+            import json
+
+            # Only save if cache is built
+            if self._device_cache["is_built"]:
+                with open(self._cache_file_path, 'w') as f:
+                    json.dump(self._device_cache, f, indent=2)
+
+                self.log_message("Saved device cache to file: {0}".format(self._cache_file_path))
+            else:
+                self.log_message("Cache not built yet, skipping save")
+
+        except Exception as e:
+            self.log_message("Error saving cache to file: {0}".format(str(e)))
+
+    def _clear_cache_file(self):
+        """Delete the cache file"""
+        if not self._cache_file_path:
+            return
+
+        try:
+            import os
+
+            if os.path.exists(self._cache_file_path):
+                os.remove(self._cache_file_path)
+                self.log_message("Deleted cache file: {0}".format(self._cache_file_path))
+            else:
+                self.log_message("Cache file does not exist")
+
+        except Exception as e:
+            self.log_message("Error deleting cache file: {0}".format(str(e)))
+
+    def _search_cached_devices(self, search_term, category=None, max_results=50):
+        """
+        Search for devices in the cache by name with fuzzy matching.
+
+        Args:
+            search_term: The term to search for (case-insensitive)
+            category: Optional category to restrict search (e.g., "vst3_plugins", "instruments")
+            max_results: Maximum number of results to return
+
+        Returns:
+            List of matching devices with their URIs and metadata
+        """
+        if not self._device_cache["is_built"]:
+            return {"error": "Device cache not built. Please build cache first."}
+
+        try:
+            search_term = search_term.lower()
+            results = []
+
+            # Define which categories to search
+            search_categories = []
+            if category:
+                if category in self._device_cache and isinstance(self._device_cache[category], list):
+                    search_categories = [category]
+                else:
+                    return {"error": "Invalid category: {0}".format(category)}
+            else:
+                # Search all categories
+                search_categories = [
+                    "vst3_plugins", "vst_plugins", "au_plugins",
+                    "instruments", "audio_effects", "midi_effects",
+                    "m4l_instruments", "m4l_audio_effects", "m4l_midi_effects",
+                    "drum_racks"
+                ]
+
+            # Search through specified categories
+            for cat in search_categories:
+                if cat in self._device_cache and isinstance(self._device_cache[cat], list):
+                    for device in self._device_cache[cat]:
+                        if not device or not isinstance(device, dict):
+                            continue
+
+                        device_name = device.get("name", "").lower()
+                        device_path = device.get("path", "").lower()
+
+                        # Check for exact match, substring match, or word match
+                        if (search_term in device_name or
+                            search_term in device_path or
+                            any(search_term in word for word in device_name.split()) or
+                            any(search_term in word for word in device_path.split())):
+
+                            result = {
+                                "name": device.get("name", ""),
+                                "uri": device.get("uri", ""),
+                                "path": device.get("path", ""),
+                                "category": cat,
+                                "is_loadable": device.get("is_loadable", False)
+                            }
+
+                            # Calculate relevance score for better sorting
+                            score = 0
+                            if search_term == device_name:
+                                score = 100  # Exact match
+                            elif device_name.startswith(search_term):
+                                score = 90   # Starts with
+                            elif search_term in device_name:
+                                score = 80   # Contains
+                            elif any(word.startswith(search_term) for word in device_name.split()):
+                                score = 70   # Word starts with
+                            elif search_term in device_path:
+                                score = 60   # In path
+                            else:
+                                score = 50   # Other matches
+
+                            result["relevance_score"] = score
+                            results.append(result)
+
+            # Sort by relevance score (highest first)
+            results.sort(key=lambda x: x["relevance_score"], reverse=True)
+
+            # Limit results
+            if len(results) > max_results:
+                results = results[:max_results]
+
+            return {
+                "search_term": search_term,
+                "category": category,
+                "total_results": len(results),
+                "results": results
+            }
+
+        except Exception as e:
+            self.log_message("Error searching cached devices: {0}".format(str(e)))
+            return {"error": "Search failed: {0}".format(str(e))}
+
+    def _get_places(self):
+        """Get the list of Places (user-added folders) from the browser"""
+        try:
+            app = self.application()
+            if not app or not app.browser:
+                return {"error": "Browser not available"}
+
+            browser = app.browser
+            places_info = {
+                "available_attributes": [],
+                "places": []
+            }
+
+            # First, let's see what attributes are available on the browser
+            browser_attrs = [attr for attr in dir(browser) if not attr.startswith('_')]
+            places_info["browser_attributes"] = browser_attrs
+
+            # Look for places/user library related attributes
+            places_attrs = [attr for attr in browser_attrs if 'place' in attr.lower() or 'user' in attr.lower() or 'library' in attr.lower()]
+            places_info["places_related_attributes"] = places_attrs
+
+            # Try to access common places attributes
+            if hasattr(browser, 'user_library'):
+                try:
+                    user_lib = browser.user_library
+                    places_info["user_library"] = {
+                        "available": True,
+                        "type": str(type(user_lib)),
+                        "attributes": [attr for attr in dir(user_lib) if not attr.startswith('_')]
+                    }
+
+                    # Try to get children if available
+                    if hasattr(user_lib, 'children'):
+                        places_info["user_library"]["has_children"] = True
+                        try:
+                            children = list(user_lib.children)
+                            places_info["user_library"]["children_count"] = len(children)
+
+                            # Get info about first few places
+                            for i, child in enumerate(children[:5]):
+                                place_info = {
+                                    "index": i,
+                                    "name": getattr(child, 'name', 'Unknown'),
+                                    "uri": getattr(child, 'uri', ''),
+                                    "is_folder": getattr(child, 'is_folder', False),
+                                    "attributes": [attr for attr in dir(child) if not attr.startswith('_')]
+                                }
+                                places_info["places"].append(place_info)
+                        except Exception as e:
+                            places_info["user_library"]["children_error"] = str(e)
+                    else:
+                        places_info["user_library"]["has_children"] = False
+
+                except Exception as e:
+                    places_info["user_library"] = {"error": str(e)}
+            else:
+                places_info["user_library"] = {"available": False}
+
+            # Try other possible places attributes
+            for attr_name in ['places', 'user_folders', 'user_places']:
+                if hasattr(browser, attr_name):
+                    try:
+                        attr_obj = getattr(browser, attr_name)
+                        places_info[attr_name] = {
+                            "available": True,
+                            "type": str(type(attr_obj)),
+                            "attributes": [attr for attr in dir(attr_obj) if not attr.startswith('_')]
+                        }
+                    except Exception as e:
+                        places_info[attr_name] = {"error": str(e)}
+
+            return places_info
+
+        except Exception as e:
+            self.log_message("Error getting places: {0}".format(str(e)))
+            return {"error": "Failed to get places: {0}".format(str(e))}
+
+    def _browse_place(self, place_index=None, place_uri=None, path=""):
+        """Browse the contents of a specific place by index or URI"""
+        try:
+            app = self.application()
+            if not app or not app.browser:
+                return {"error": "Browser not available"}
+
+            browser = app.browser
+
+            # Get the target place
+            target_place = None
+
+            if place_uri:
+                # Try to find by URI using the existing function
+                target_place = self._find_browser_item_by_uri(browser, place_uri)
+            elif place_index is not None:
+                # Try to get by index from user_library
+                if hasattr(browser, 'user_library') and hasattr(browser.user_library, 'children'):
+                    try:
+                        children = list(browser.user_library.children)
+                        if 0 <= place_index < len(children):
+                            target_place = children[place_index]
+                    except Exception as e:
+                        return {"error": "Failed to access place by index: {0}".format(str(e))}
+
+            if not target_place:
+                return {"error": "Place not found"}
+
+            # Now browse the contents
+            result = {
+                "place_name": getattr(target_place, 'name', 'Unknown'),
+                "place_uri": getattr(target_place, 'uri', ''),
+                "current_path": path,
+                "contents": []
+            }
+
+            # Navigate to the specified path if provided
+            current_item = target_place
+            if path:
+                path_parts = [p for p in path.split('/') if p]
+                for part in path_parts:
+                    if hasattr(current_item, 'children'):
+                        found = False
+                        for child in current_item.children:
+                            if getattr(child, 'name', '') == part:
+                                current_item = child
+                                found = True
+                                break
+                        if not found:
+                            return {"error": "Path not found: {0}".format(part)}
+                    else:
+                        return {"error": "Cannot navigate deeper - not a folder"}
+
+            # Get contents of current location
+            if hasattr(current_item, 'children'):
+                try:
+                    for child in current_item.children:
+                        item_info = {
+                            "name": getattr(child, 'name', 'Unknown'),
+                            "uri": getattr(child, 'uri', ''),
+                            "is_folder": getattr(child, 'is_folder', False),
+                            "is_device": getattr(child, 'is_device', False),
+                            "is_loadable": getattr(child, 'is_loadable', False),
+                            "is_preview": getattr(child, 'is_preview', False)
+                        }
+
+                        # Try to get file type info
+                        if hasattr(child, 'source') and hasattr(child.source, 'can_have_signature'):
+                            item_info["source_info"] = {
+                                "can_have_signature": child.source.can_have_signature
+                            }
+
+                        result["contents"].append(item_info)
+
+                except Exception as e:
+                    result["browse_error"] = str(e)
+            else:
+                result["contents"] = []
+                result["note"] = "This item has no children to browse"
+
+            result["total_items"] = len(result["contents"])
+            return result
+
+        except Exception as e:
+            self.log_message("Error browsing place: {0}".format(str(e)))
+            return {"error": "Failed to browse place: {0}".format(str(e))}
