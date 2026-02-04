@@ -1,302 +1,208 @@
-TRACK CALLABLE: View - <class 'Boost.Python.class'>
-2025-09-16T00:17:59.265127: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: View - <class 'Boost.Python.class'>
-TRACK CALLABLE: add_arm_listener - <class 'method'>
-2025-09-16T00:17:59.265174: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_arm_listener - <class 'method'>
-TRACK CALLABLE: add_arrangement_clips_listener - <class 'method'>
-2025-09-16T00:17:59.265211: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_arrangement_clips_listener - <class 'method'>
-TRACK CALLABLE: add_available_input_routing_channels_listener - <class 'method'>
-2025-09-16T00:17:59.265248: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_available_input_routing_channels_listener - <class 'method'>
-TRACK CALLABLE: add_available_input_routing_types_listener - <class 'method'>
-2025-09-16T00:17:59.265289: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_available_input_routing_types_listener - <class 'method'>
-TRACK CALLABLE: add_available_output_routing_channels_listener - <class 'method'>
-2025-09-16T00:17:59.265327: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_available_output_routing_channels_listener - <class 'method'>
-TRACK CALLABLE: add_available_output_routing_types_listener - <class 'method'>
-2025-09-16T00:17:59.265360: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_available_output_routing_types_listener - <class 'method'>
-TRACK CALLABLE: add_back_to_arranger_listener - <class 'method'>
-2025-09-16T00:17:59.265395: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_back_to_arranger_listener - <class 'method'>
-TRACK CALLABLE: add_clip_slots_listener - <class 'method'>
-2025-09-16T00:17:59.265427: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_clip_slots_listener - <class 'method'>
-TRACK CALLABLE: add_color_index_listener - <class 'method'>
-2025-09-16T00:17:59.265458: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_color_index_listener - <class 'method'>
-TRACK CALLABLE: add_color_listener - <class 'method'>
-2025-09-16T00:17:59.265491: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_color_listener - <class 'method'>
-TRACK CALLABLE: add_current_input_routing_listener - <class 'method'>
-2025-09-16T00:17:59.265526: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_current_input_routing_listener - <class 'method'>
-TRACK CALLABLE: add_current_input_sub_routing_listener - <class 'method'>
-2025-09-16T00:17:59.265562: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_current_input_sub_routing_listener - <class 'method'>
-TRACK CALLABLE: add_current_monitoring_state_listener - <class 'method'>
-2025-09-16T00:17:59.265594: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_current_monitoring_state_listener - <class 'method'>
-TRACK CALLABLE: add_current_output_routing_listener - <class 'method'>
-2025-09-16T00:17:59.265627: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_current_output_routing_listener - <class 'method'>
-TRACK CALLABLE: add_current_output_sub_routing_listener - <class 'method'>
-2025-09-16T00:17:59.265659: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_current_output_sub_routing_listener - <class 'method'>
-TRACK CALLABLE: add_data_listener - <class 'method'>
-2025-09-16T00:17:59.265775: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_data_listener - <class 'method'>
-TRACK CALLABLE: add_devices_listener - <class 'method'>
-2025-09-16T00:17:59.265876: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_devices_listener - <class 'method'>
-TRACK CALLABLE: add_fired_slot_index_listener - <class 'method'>
-2025-09-16T00:17:59.265947: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_fired_slot_index_listener - <class 'method'>
-TRACK CALLABLE: add_has_audio_input_listener - <class 'method'>
-2025-09-16T00:17:59.266030: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_has_audio_input_listener - <class 'method'>
-TRACK CALLABLE: add_has_audio_output_listener - <class 'method'>
-2025-09-16T00:17:59.266070: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_has_audio_output_listener - <class 'method'>
-TRACK CALLABLE: add_has_midi_input_listener - <class 'method'>
-2025-09-16T00:17:59.266108: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_has_midi_input_listener - <class 'method'>
-TRACK CALLABLE: add_has_midi_output_listener - <class 'method'>
-2025-09-16T00:17:59.266142: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_has_midi_output_listener - <class 'method'>
-TRACK CALLABLE: add_implicit_arm_listener - <class 'method'>
-2025-09-16T00:17:59.266176: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_implicit_arm_listener - <class 'method'>
-TRACK CALLABLE: add_input_meter_left_listener - <class 'method'>
-2025-09-16T00:17:59.266210: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_meter_left_listener - <class 'method'>
-TRACK CALLABLE: add_input_meter_level_listener - <class 'method'>
-2025-09-16T00:17:59.266328: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_meter_level_listener - <class 'method'>
-TRACK CALLABLE: add_input_meter_right_listener - <class 'method'>
-2025-09-16T00:17:59.266366: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_meter_right_listener - <class 'method'>
-TRACK CALLABLE: add_input_routing_channel_listener - <class 'method'>
-2025-09-16T00:17:59.266400: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_routing_channel_listener - <class 'method'>
-TRACK CALLABLE: add_input_routing_type_listener - <class 'method'>
-2025-09-16T00:17:59.266443: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_routing_type_listener - <class 'method'>
-TRACK CALLABLE: add_input_routings_listener - <class 'method'>
-2025-09-16T00:17:59.266477: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_routings_listener - <class 'method'>
-TRACK CALLABLE: add_input_sub_routings_listener - <class 'method'>
-2025-09-16T00:17:59.266517: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_input_sub_routings_listener - <class 'method'>
-TRACK CALLABLE: add_is_frozen_listener - <class 'method'>
-2025-09-16T00:17:59.266555: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_is_frozen_listener - <class 'method'>
-TRACK CALLABLE: add_is_showing_chains_listener - <class 'method'>
-2025-09-16T00:17:59.266598: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_is_showing_chains_listener - <class 'method'>
-TRACK CALLABLE: add_mute_listener - <class 'method'>
-2025-09-16T00:17:59.266641: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_mute_listener - <class 'method'>
-TRACK CALLABLE: add_muted_via_solo_listener - <class 'method'>
-2025-09-16T00:17:59.266680: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_muted_via_solo_listener - <class 'method'>
-TRACK CALLABLE: add_name_listener - <class 'method'>
-2025-09-16T00:17:59.266724: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_name_listener - <class 'method'>
-TRACK CALLABLE: add_output_meter_left_listener - <class 'method'>
-2025-09-16T00:17:59.266762: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_meter_left_listener - <class 'method'>
-TRACK CALLABLE: add_output_meter_level_listener - <class 'method'>
-2025-09-16T00:17:59.266798: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_meter_level_listener - <class 'method'>
-TRACK CALLABLE: add_output_meter_right_listener - <class 'method'>
-2025-09-16T00:17:59.266835: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_meter_right_listener - <class 'method'>
-TRACK CALLABLE: add_output_routing_channel_listener - <class 'method'>
-2025-09-16T00:17:59.266870: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_routing_channel_listener - <class 'method'>
-TRACK CALLABLE: add_output_routing_type_listener - <class 'method'>
-2025-09-16T00:17:59.360840: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_routing_type_listener - <class 'method'>
-TRACK CALLABLE: add_output_routings_listener - <class 'method'>
-2025-09-16T00:17:59.361036: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_routings_listener - <class 'method'>
-TRACK CALLABLE: add_output_sub_routings_listener - <class 'method'>
-2025-09-16T00:17:59.361088: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_output_sub_routings_listener - <class 'method'>
-TRACK CALLABLE: add_performance_impact_listener - <class 'method'>
-2025-09-16T00:17:59.361131: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_performance_impact_listener - <class 'method'>
-TRACK CALLABLE: add_playing_slot_index_listener - <class 'method'>
-2025-09-16T00:17:59.361205: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_playing_slot_index_listener - <class 'method'>
-TRACK CALLABLE: add_solo_listener - <class 'method'>
-2025-09-16T00:17:59.361304: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_solo_listener - <class 'method'>
-TRACK CALLABLE: add_take_lanes_listener - <class 'method'>
-2025-09-16T00:17:59.361359: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: add_take_lanes_listener - <class 'method'>
-TRACK CALLABLE: arm_has_listener - <class 'method'>
-2025-09-16T00:17:59.361492: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: arm_has_listener - <class 'method'>
-TRACK CALLABLE: arrangement_clips_has_listener - <class 'method'>
-2025-09-16T00:17:59.361542: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: arrangement_clips_has_listener - <class 'method'>
-TRACK CALLABLE: available_input_routing_channels_has_listener - <class 'method'>
-2025-09-16T00:17:59.361607: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: available_input_routing_channels_has_listener - <class 'method'>
-TRACK CALLABLE: available_input_routing_types_has_listener - <class 'method'>
-2025-09-16T00:17:59.361745: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: available_input_routing_types_has_listener - <class 'method'>
-TRACK CALLABLE: available_output_routing_channels_has_listener - <class 'method'>
-2025-09-16T00:17:59.361789: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: available_output_routing_channels_has_listener - <class 'method'>
-TRACK CALLABLE: available_output_routing_types_has_listener - <class 'method'>
-2025-09-16T00:17:59.361860: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: available_output_routing_types_has_listener - <class 'method'>
-TRACK CALLABLE: back_to_arranger_has_listener - <class 'method'>
-2025-09-16T00:17:59.361903: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: back_to_arranger_has_listener - <class 'method'>
-TRACK CALLABLE: clip_slots_has_listener - <class 'method'>
-2025-09-16T00:17:59.362059: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: clip_slots_has_listener - <class 'method'>
-TRACK CALLABLE: color_has_listener - <class 'method'>
-2025-09-16T00:17:59.362148: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: color_has_listener - <class 'method'>
-TRACK CALLABLE: color_index_has_listener - <class 'method'>
-2025-09-16T00:17:59.362201: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: color_index_has_listener - <class 'method'>
-TRACK CALLABLE: create_audio_clip - <class 'method'>
-2025-09-16T00:17:59.362497: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: create_audio_clip - <class 'method'>
-TRACK CALLABLE: create_midi_clip - <class 'method'>
-2025-09-16T00:17:59.362541: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: create_midi_clip - <class 'method'>
-TRACK CALLABLE: create_take_lane - <class 'method'>
-2025-09-16T00:17:59.362577: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: create_take_lane - <class 'method'>
-TRACK CALLABLE: current_input_routing_has_listener - <class 'method'>
-2025-09-16T00:17:59.363041: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: current_input_routing_has_listener - <class 'method'>
-TRACK CALLABLE: current_input_sub_routing_has_listener - <class 'method'>
-2025-09-16T00:17:59.363182: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: current_input_sub_routing_has_listener - <class 'method'>
-TRACK CALLABLE: current_monitoring_state_has_listener - <class 'method'>
-2025-09-16T00:17:59.363227: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: current_monitoring_state_has_listener - <class 'method'>
-TRACK CALLABLE: current_output_routing_has_listener - <class 'method'>
-2025-09-16T00:17:59.363327: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: current_output_routing_has_listener - <class 'method'>
-TRACK CALLABLE: current_output_sub_routing_has_listener - <class 'method'>
-2025-09-16T00:17:59.363504: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: current_output_sub_routing_has_listener - <class 'method'>
-TRACK CALLABLE: data_has_listener - <class 'method'>
-2025-09-16T00:17:59.363548: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: data_has_listener - <class 'method'>
-TRACK CALLABLE: delete_clip - <class 'method'>
-2025-09-16T00:17:59.363589: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: delete_clip - <class 'method'>
-TRACK CALLABLE: delete_device - <class 'method'>
-2025-09-16T00:17:59.363628: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: delete_device - <class 'method'>
-TRACK CALLABLE: devices_has_listener - <class 'method'>
-2025-09-16T00:17:59.363675: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: devices_has_listener - <class 'method'>
-TRACK CALLABLE: duplicate_clip_slot - <class 'method'>
-2025-09-16T00:17:59.363719: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: duplicate_clip_slot - <class 'method'>
-TRACK CALLABLE: duplicate_clip_to_arrangement - <class 'method'>
-2025-09-16T00:17:59.363758: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: duplicate_clip_to_arrangement - <class 'method'>
-TRACK CALLABLE: fired_slot_index_has_listener - <class 'method'>
-2025-09-16T00:17:59.363801: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: fired_slot_index_has_listener - <class 'method'>
-TRACK CALLABLE: get_data - <class 'method'>
-2025-09-16T00:17:59.364339: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: get_data - <class 'method'>
-TRACK CALLABLE: has_audio_input_has_listener - <class 'method'>
-2025-09-16T00:17:59.364386: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: has_audio_input_has_listener - <class 'method'>
-TRACK CALLABLE: has_audio_output_has_listener - <class 'method'>
-2025-09-16T00:17:59.364425: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: has_audio_output_has_listener - <class 'method'>
-TRACK CALLABLE: has_midi_input_has_listener - <class 'method'>
-2025-09-16T00:17:59.364462: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: has_midi_input_has_listener - <class 'method'>
-TRACK CALLABLE: has_midi_output_has_listener - <class 'method'>
-2025-09-16T00:17:59.364500: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: has_midi_output_has_listener - <class 'method'>
-TRACK CALLABLE: implicit_arm_has_listener - <class 'method'>
-2025-09-16T00:17:59.364538: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: implicit_arm_has_listener - <class 'method'>
-TRACK CALLABLE: input_meter_left_has_listener - <class 'method'>
-2025-09-16T00:17:59.364651: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_meter_left_has_listener - <class 'method'>
-TRACK CALLABLE: input_meter_level_has_listener - <class 'method'>
-2025-09-16T00:17:59.364782: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_meter_level_has_listener - <class 'method'>
-TRACK CALLABLE: input_meter_right_has_listener - <class 'method'>
-2025-09-16T00:17:59.364902: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_meter_right_has_listener - <class 'method'>
-TRACK CALLABLE: input_routing_channel_has_listener - <class 'method'>
-2025-09-16T00:17:59.365072: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_routing_channel_has_listener - <class 'method'>
-TRACK CALLABLE: input_routing_type_has_listener - <class 'method'>
-2025-09-16T00:17:59.365150: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_routing_type_has_listener - <class 'method'>
-TRACK CALLABLE: input_routings_has_listener - <class 'method'>
-2025-09-16T00:17:59.365382: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_routings_has_listener - <class 'method'>
-TRACK CALLABLE: input_sub_routings_has_listener - <class 'method'>
-2025-09-16T00:17:59.365507: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: input_sub_routings_has_listener - <class 'method'>
-TRACK CALLABLE: is_frozen_has_listener - <class 'method'>
-2025-09-16T00:17:59.365558: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: is_frozen_has_listener - <class 'method'>
-TRACK CALLABLE: is_showing_chains_has_listener - <class 'method'>
-2025-09-16T00:17:59.365622: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: is_showing_chains_has_listener - <class 'method'>
-TRACK CALLABLE: jump_in_running_session_clip - <class 'method'>
-2025-09-16T00:17:59.365660: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: jump_in_running_session_clip - <class 'method'>
-TRACK CALLABLE: monitoring_states - <class 'type'>
-2025-09-16T00:17:59.365707: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: monitoring_states - <class 'type'>
-TRACK CALLABLE: mute_has_listener - <class 'method'>
-2025-09-16T00:17:59.365804: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: mute_has_listener - <class 'method'>
-TRACK CALLABLE: muted_via_solo_has_listener - <class 'method'>
-2025-09-16T00:17:59.365870: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: muted_via_solo_has_listener - <class 'method'>
-TRACK CALLABLE: name_has_listener - <class 'method'>
-2025-09-16T00:17:59.365914: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: name_has_listener - <class 'method'>
-TRACK CALLABLE: output_meter_left_has_listener - <class 'method'>
-2025-09-16T00:17:59.366038: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_meter_left_has_listener - <class 'method'>
-TRACK CALLABLE: output_meter_level_has_listener - <class 'method'>
-2025-09-16T00:17:59.366078: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_meter_level_has_listener - <class 'method'>
-TRACK CALLABLE: output_meter_right_has_listener - <class 'method'>
-2025-09-16T00:17:59.366188: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_meter_right_has_listener - <class 'method'>
-TRACK CALLABLE: output_routing_channel_has_listener - <class 'method'>
-2025-09-16T00:17:59.366236: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_routing_channel_has_listener - <class 'method'>
-TRACK CALLABLE: output_routing_type_has_listener - <class 'method'>
-2025-09-16T00:17:59.366282: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_routing_type_has_listener - <class 'method'>
-TRACK CALLABLE: output_routings_has_listener - <class 'method'>
-2025-09-16T00:17:59.461156: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_routings_has_listener - <class 'method'>
-TRACK CALLABLE: output_sub_routings_has_listener - <class 'method'>
-2025-09-16T00:17:59.461391: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: output_sub_routings_has_listener - <class 'method'>
-TRACK CALLABLE: performance_impact_has_listener - <class 'method'>
-2025-09-16T00:17:59.461439: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: performance_impact_has_listener - <class 'method'>
-TRACK CALLABLE: playing_slot_index_has_listener - <class 'method'>
-2025-09-16T00:17:59.461482: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: playing_slot_index_has_listener - <class 'method'>
-TRACK CALLABLE: remove_arm_listener - <class 'method'>
-2025-09-16T00:17:59.461522: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_arm_listener - <class 'method'>
-TRACK CALLABLE: remove_arrangement_clips_listener - <class 'method'>
-2025-09-16T00:17:59.461561: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_arrangement_clips_listener - <class 'method'>
-TRACK CALLABLE: remove_available_input_routing_channels_listener - <class 'method'>
-2025-09-16T00:17:59.461601: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_available_input_routing_channels_listener - <class 'method'>
-TRACK CALLABLE: remove_available_input_routing_types_listener - <class 'method'>
-2025-09-16T00:17:59.461639: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_available_input_routing_types_listener - <class 'method'>
-TRACK CALLABLE: remove_available_output_routing_channels_listener - <class 'method'>
-2025-09-16T00:17:59.461687: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_available_output_routing_channels_listener - <class 'method'>
-TRACK CALLABLE: remove_available_output_routing_types_listener - <class 'method'>
-2025-09-16T00:17:59.461725: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_available_output_routing_types_listener - <class 'method'>
-TRACK CALLABLE: remove_back_to_arranger_listener - <class 'method'>
-2025-09-16T00:17:59.461918: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_back_to_arranger_listener - <class 'method'>
-TRACK CALLABLE: remove_clip_slots_listener - <class 'method'>
-2025-09-16T00:17:59.461986: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_clip_slots_listener - <class 'method'>
-TRACK CALLABLE: remove_color_index_listener - <class 'method'>
-2025-09-16T00:17:59.462030: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_color_index_listener - <class 'method'>
-TRACK CALLABLE: remove_color_listener - <class 'method'>
-2025-09-16T00:17:59.462072: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_color_listener - <class 'method'>
-TRACK CALLABLE: remove_current_input_routing_listener - <class 'method'>
-2025-09-16T00:17:59.462113: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_current_input_routing_listener - <class 'method'>
-TRACK CALLABLE: remove_current_input_sub_routing_listener - <class 'method'>
-2025-09-16T00:17:59.462153: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_current_input_sub_routing_listener - <class 'method'>
-TRACK CALLABLE: remove_current_monitoring_state_listener - <class 'method'>
-2025-09-16T00:17:59.462196: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_current_monitoring_state_listener - <class 'method'>
-TRACK CALLABLE: remove_current_output_routing_listener - <class 'method'>
-2025-09-16T00:17:59.462238: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_current_output_routing_listener - <class 'method'>
-TRACK CALLABLE: remove_current_output_sub_routing_listener - <class 'method'>
-2025-09-16T00:17:59.462295: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_current_output_sub_routing_listener - <class 'method'>
-TRACK CALLABLE: remove_data_listener - <class 'method'>
-2025-09-16T00:17:59.462330: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_data_listener - <class 'method'>
-TRACK CALLABLE: remove_devices_listener - <class 'method'>
-2025-09-16T00:17:59.462364: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_devices_listener - <class 'method'>
-TRACK CALLABLE: remove_fired_slot_index_listener - <class 'method'>
-2025-09-16T00:17:59.462398: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_fired_slot_index_listener - <class 'method'>
-TRACK CALLABLE: remove_has_audio_input_listener - <class 'method'>
-2025-09-16T00:17:59.462434: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_has_audio_input_listener - <class 'method'>
-TRACK CALLABLE: remove_has_audio_output_listener - <class 'method'>
-2025-09-16T00:17:59.462473: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_has_audio_output_listener - <class 'method'>
-TRACK CALLABLE: remove_has_midi_input_listener - <class 'method'>
-2025-09-16T00:17:59.462517: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_has_midi_input_listener - <class 'method'>
-TRACK CALLABLE: remove_has_midi_output_listener - <class 'method'>
-2025-09-16T00:17:59.462553: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_has_midi_output_listener - <class 'method'>
-TRACK CALLABLE: remove_implicit_arm_listener - <class 'method'>
-2025-09-16T00:17:59.462586: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_implicit_arm_listener - <class 'method'>
-TRACK CALLABLE: remove_input_meter_left_listener - <class 'method'>
-2025-09-16T00:17:59.462647: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_meter_left_listener - <class 'method'>
-TRACK CALLABLE: remove_input_meter_level_listener - <class 'method'>
-2025-09-16T00:17:59.462782: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_meter_level_listener - <class 'method'>
-TRACK CALLABLE: remove_input_meter_right_listener - <class 'method'>
-2025-09-16T00:17:59.462877: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_meter_right_listener - <class 'method'>
-TRACK CALLABLE: remove_input_routing_channel_listener - <class 'method'>
-2025-09-16T00:17:59.462972: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_routing_channel_listener - <class 'method'>
-TRACK CALLABLE: remove_input_routing_type_listener - <class 'method'>
-2025-09-16T00:17:59.463040: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_routing_type_listener - <class 'method'>
-TRACK CALLABLE: remove_input_routings_listener - <class 'method'>
-2025-09-16T00:17:59.463088: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_routings_listener - <class 'method'>
-TRACK CALLABLE: remove_input_sub_routings_listener - <class 'method'>
-2025-09-16T00:17:59.463128: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_input_sub_routings_listener - <class 'method'>
-TRACK CALLABLE: remove_is_frozen_listener - <class 'method'>
-2025-09-16T00:17:59.463199: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_is_frozen_listener - <class 'method'>
-TRACK CALLABLE: remove_is_showing_chains_listener - <class 'method'>
-2025-09-16T00:17:59.463274: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_is_showing_chains_listener - <class 'method'>
-TRACK CALLABLE: remove_mute_listener - <class 'method'>
-2025-09-16T00:17:59.463423: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_mute_listener - <class 'method'>
-TRACK CALLABLE: remove_muted_via_solo_listener - <class 'method'>
-2025-09-16T00:17:59.463471: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_muted_via_solo_listener - <class 'method'>
-TRACK CALLABLE: remove_name_listener - <class 'method'>
-2025-09-16T00:17:59.463529: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_name_listener - <class 'method'>
-TRACK CALLABLE: remove_output_meter_left_listener - <class 'method'>
-2025-09-16T00:17:59.463653: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_meter_left_listener - <class 'method'>
-TRACK CALLABLE: remove_output_meter_level_listener - <class 'method'>
-2025-09-16T00:17:59.463690: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_meter_level_listener - <class 'method'>
-TRACK CALLABLE: remove_output_meter_right_listener - <class 'method'>
-2025-09-16T00:17:59.463724: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_meter_right_listener - <class 'method'>
-TRACK CALLABLE: remove_output_routing_channel_listener - <class 'method'>
-2025-09-16T00:17:59.463759: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_routing_channel_listener - <class 'method'>
-TRACK CALLABLE: remove_output_routing_type_listener - <class 'method'>
-2025-09-16T00:17:59.463794: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_routing_type_listener - <class 'method'>
-TRACK CALLABLE: remove_output_routings_listener - <class 'method'>
-2025-09-16T00:17:59.463829: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_routings_listener - <class 'method'>
-TRACK CALLABLE: remove_output_sub_routings_listener - <class 'method'>
-2025-09-16T00:17:59.463867: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_output_sub_routings_listener - <class 'method'>
-TRACK CALLABLE: remove_performance_impact_listener - <class 'method'>
-2025-09-16T00:17:59.463904: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_performance_impact_listener - <class 'method'>
-TRACK CALLABLE: remove_playing_slot_index_listener - <class 'method'>
-2025-09-16T00:17:59.463938: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_playing_slot_index_listener - <class 'method'>
-TRACK CALLABLE: remove_solo_listener - <class 'method'>
-2025-09-16T00:17:59.463972: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_solo_listener - <class 'method'>
-TRACK CALLABLE: remove_take_lanes_listener - <class 'method'>
-2025-09-16T00:17:59.464006: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: remove_take_lanes_listener - <class 'method'>
-TRACK CALLABLE: set_data - <class 'method'>
-2025-09-16T00:17:59.464042: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: set_data - <class 'method'>
-TRACK CALLABLE: solo_has_listener - <class 'method'>
-2025-09-16T00:17:59.464087: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: solo_has_listener - <class 'method'>
-TRACK CALLABLE: stop_all_clips - <class 'method'>
-2025-09-16T00:17:59.464123: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: stop_all_clips - <class 'method'>
-TRACK CALLABLE: take_lanes_has_listener - <class 'method'>
-2025-09-16T00:17:59.464166: info: RemoteScriptMessage: (AbletonMCP) TRACK CALLABLE: take_lanes_has_listener - <class 'method'>
+TRACK: View
+TRACK: add_arm_listener
+TRACK: add_arrangement_clips_listener
+TRACK: add_available_input_routing_channels_listener
+TRACK: add_available_input_routing_types_listener
+TRACK: add_available_output_routing_channels_listener
+TRACK: add_available_output_routing_types_listener
+TRACK: add_back_to_arranger_listener
+TRACK: add_clip_slots_listener
+TRACK: add_color_index_listener
+TRACK: add_color_listener
+TRACK: add_current_input_routing_listener
+TRACK: add_current_input_sub_routing_listener
+TRACK: add_current_monitoring_state_listener
+TRACK: add_current_output_routing_listener
+TRACK: add_current_output_sub_routing_listener
+TRACK: add_data_listener
+TRACK: add_devices_listener
+TRACK: add_fired_slot_index_listener
+TRACK: add_has_audio_input_listener
+TRACK: add_has_audio_output_listener
+TRACK: add_has_midi_input_listener
+TRACK: add_has_midi_output_listener
+TRACK: add_implicit_arm_listener
+TRACK: add_input_meter_left_listener
+TRACK: add_input_meter_level_listener
+TRACK: add_input_meter_right_listener
+TRACK: add_input_routing_channel_listener
+TRACK: add_input_routing_type_listener
+TRACK: add_input_routings_listener
+TRACK: add_input_sub_routings_listener
+TRACK: add_is_frozen_listener
+TRACK: add_is_showing_chains_listener
+TRACK: add_mute_listener
+TRACK: add_muted_via_solo_listener
+TRACK: add_name_listener
+TRACK: add_output_meter_left_listener
+TRACK: add_output_meter_level_listener
+TRACK: add_output_meter_right_listener
+TRACK: add_output_routing_channel_listener
+TRACK: add_output_routing_type_listener
+TRACK: add_output_routings_listener
+TRACK: add_output_sub_routings_listener
+TRACK: add_performance_impact_listener
+TRACK: add_playing_slot_index_listener
+TRACK: add_solo_listener
+TRACK: add_take_lanes_listener
+TRACK: arm
+TRACK: arm_has_listener
+TRACK: arrangement_clips
+TRACK: arrangement_clips_has_listener
+TRACK: available_input_routing_channels
+TRACK: available_input_routing_channels_has_listener
+TRACK: available_input_routing_types
+TRACK: available_input_routing_types_has_listener
+TRACK: available_output_routing_channels
+TRACK: available_output_routing_channels_has_listener
+TRACK: available_output_routing_types
+TRACK: available_output_routing_types_has_listener
+TRACK: back_to_arranger
+TRACK: back_to_arranger_has_listener
+TRACK: can_be_armed
+TRACK: can_be_frozen
+TRACK: can_show_chains
+TRACK: canonical_parent
+TRACK: clip_slots
+TRACK: clip_slots_has_listener
+TRACK: color
+TRACK: color_has_listener
+TRACK: color_index
+TRACK: color_index_has_listener
+TRACK: create_audio_clip
+TRACK: create_midi_clip
+TRACK: create_take_lane
+TRACK: current_input_routing
+TRACK: current_input_routing_has_listener
+TRACK: current_input_sub_routing
+TRACK: current_input_sub_routing_has_listener
+TRACK: current_monitoring_state
+TRACK: current_monitoring_state_has_listener
+TRACK: current_output_routing
+TRACK: current_output_routing_has_listener
+TRACK: current_output_sub_routing
+TRACK: current_output_sub_routing_has_listener
+TRACK: data_has_listener
+TRACK: delete_clip
+TRACK: delete_device
+TRACK: devices
+TRACK: devices_has_listener
+TRACK: duplicate_clip_slot
+TRACK: duplicate_clip_to_arrangement
+TRACK: fired_slot_index
+TRACK: fired_slot_index_has_listener
+TRACK: fold_state
+TRACK: get_data
+TRACK: group_track
+TRACK: has_audio_input
+TRACK: has_audio_input_has_listener
+TRACK: has_audio_output
+TRACK: has_audio_output_has_listener
+TRACK: has_midi_input
+TRACK: has_midi_input_has_listener
+TRACK: has_midi_output
+TRACK: has_midi_output_has_listener
+TRACK: implicit_arm
+TRACK: implicit_arm_has_listener
+TRACK: input_meter_left
+TRACK: input_meter_left_has_listener
+TRACK: input_meter_level
+TRACK: input_meter_level_has_listener
+TRACK: input_meter_right
+TRACK: input_meter_right_has_listener
+TRACK: input_routing_channel
+TRACK: input_routing_channel_has_listener
+TRACK: input_routing_type
+TRACK: input_routing_type_has_listener
+TRACK: input_routings
+TRACK: input_routings_has_listener
+TRACK: input_sub_routings
+TRACK: input_sub_routings_has_listener
+TRACK: is_foldable
+TRACK: is_frozen
+TRACK: is_frozen_has_listener
+TRACK: is_grouped
+TRACK: is_part_of_selection
+TRACK: is_showing_chains
+TRACK: is_showing_chains_has_listener
+TRACK: is_visible
+TRACK: jump_in_running_session_clip
+TRACK: mixer_device
+TRACK: monitoring_states
+TRACK: mute
+TRACK: mute_has_listener
+TRACK: muted_via_solo
+TRACK: muted_via_solo_has_listener
+TRACK: name
+TRACK: name_has_listener
+TRACK: output_meter_left
+TRACK: output_meter_left_has_listener
+TRACK: output_meter_level
+TRACK: output_meter_level_has_listener
+TRACK: output_meter_right
+TRACK: output_meter_right_has_listener
+TRACK: output_routing_channel
+TRACK: output_routing_channel_has_listener
+TRACK: output_routing_type
+TRACK: output_routing_type_has_listener
+TRACK: output_routings
+TRACK: output_routings_has_listener
+TRACK: output_sub_routings
+TRACK: output_sub_routings_has_listener
+TRACK: performance_impact
+TRACK: performance_impact_has_listener
+TRACK: playing_slot_index
+TRACK: playing_slot_index_has_listener
+TRACK: remove_arm_listener
+TRACK: remove_arrangement_clips_listener
+TRACK: remove_available_input_routing_channels_listener
+TRACK: remove_available_input_routing_types_listener
+TRACK: remove_available_output_routing_channels_listener
+TRACK: remove_available_output_routing_types_listener
+TRACK: remove_back_to_arranger_listener
+TRACK: remove_clip_slots_listener
+TRACK: remove_color_index_listener
+TRACK: remove_color_listener
+TRACK: remove_current_input_routing_listener
+TRACK: remove_current_input_sub_routing_listener
+TRACK: remove_current_monitoring_state_listener
+TRACK: remove_current_output_routing_listener
+TRACK: remove_current_output_sub_routing_listener
+TRACK: remove_data_listener
+TRACK: remove_devices_listener
+TRACK: remove_fired_slot_index_listener
+TRACK: remove_has_audio_input_listener
+TRACK: remove_has_audio_output_listener
+TRACK: remove_has_midi_input_listener
+TRACK: remove_has_midi_output_listener
+TRACK: remove_implicit_arm_listener
+TRACK: remove_input_meter_left_listener
+TRACK: remove_input_meter_level_listener
+TRACK: remove_input_meter_right_listener
+TRACK: remove_input_routing_channel_listener
+TRACK: remove_input_routing_type_listener
+TRACK: remove_input_routings_listener
+TRACK: remove_input_sub_routings_listener
+TRACK: remove_is_frozen_listener
+TRACK: remove_is_showing_chains_listener
+TRACK: remove_mute_listener
+TRACK: remove_muted_via_solo_listener
+TRACK: remove_name_listener
+TRACK: remove_output_meter_left_listener
+TRACK: remove_output_meter_level_listener
+TRACK: remove_output_meter_right_listener
+TRACK: remove_output_routing_channel_listener
+TRACK: remove_output_routing_type_listener
+TRACK: remove_output_routings_listener
+TRACK: remove_output_sub_routings_listener
+TRACK: remove_performance_impact_listener
+TRACK: remove_playing_slot_index_listener
+TRACK: remove_solo_listener
+TRACK: remove_take_lanes_listener
+TRACK: set_data
+TRACK: solo
+TRACK: solo_has_listener
+TRACK: stop_all_clips
+TRACK: take_lanes
+TRACK: take_lanes_has_listener
+TRACK: view

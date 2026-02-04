@@ -106,10 +106,12 @@ class AbletonConnection:
             "create_clip", "add_notes_to_clip", "set_clip_name",
             "set_tempo", "fire_clip", "stop_clip", "set_device_parameter",
             "start_playback", "stop_playback", "load_instrument_or_effect",
-            "delete_track", "duplicate_track", "create_return_track",
+            "delete_track", "duplicate_track", "create_return_track", "delete_return_track",
             "create_scene", "delete_scene", "duplicate_scene", "capture_and_insert_scene",
             "stop_all_clips", "trigger_session_record", "set_track_monitoring", "tap_tempo",
-            "jump_by", "scrub_by", "duplicate_clip_to_arrangement", "set_track_frozen", "create_take_lane"
+            "jump_by", "scrub_by", "duplicate_clip_to_arrangement", "set_track_frozen", "create_take_lane",
+            "jump_to_next_cue", "jump_to_prev_cue", "set_or_delete_cue", "set_song_scale",
+            "set_track_output_routing", "select_track", "set_track_fold_state"
         ]
         
         try:
@@ -1591,6 +1593,139 @@ def explore_api(ctx: Context) -> str:
     except Exception as e:
         logger.error(f"Error exploring API: {str(e)}")
         return f"Error exploring API: {str(e)}"
+
+@mcp.tool()
+def delete_return_track(ctx: Context, track_index: int) -> str:
+    """
+    Delete a return track from the Ableton session.
+
+    Parameters:
+    - track_index: The index of the return track to delete
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("delete_return_track", {"track_index": track_index})
+        if "error" in result: return f"Error: {result['error']}"
+        return f"Deleted return track at index {track_index}"
+    except Exception as e:
+        logger.error(f"Error deleting return track: {str(e)}")
+        return f"Error deleting return track: {str(e)}"
+
+@mcp.tool()
+def jump_to_next_cue(ctx: Context) -> str:
+    """Jump the playhead to the next cue point in the arrangement."""
+    try:
+        ableton = get_ableton_connection()
+        ableton.send_command("jump_to_next_cue")
+        return "Jumped to next cue"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def jump_to_prev_cue(ctx: Context) -> str:
+    """Jump the playhead to the previous cue point in the arrangement."""
+    try:
+        ableton = get_ableton_connection()
+        ableton.send_command("jump_to_prev_cue")
+        return "Jumped to previous cue"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def set_or_delete_cue(ctx: Context) -> str:
+    """Set a new cue point at the current playhead position, or delete if one exists."""
+    try:
+        ableton = get_ableton_connection()
+        ableton.send_command("set_or_delete_cue")
+        return "Cue point set/deleted"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def set_song_scale(ctx: Context, root_note: int = None, scale_name: str = None) -> str:
+    """
+    Set the scale for the current project.
+    
+    Parameters:
+    - root_note: MIDI note number for root (0=C, 1=C#, etc.)
+    - scale_name: Name of the scale (e.g., 'Major', 'Minor')
+    """
+    try:
+        ableton = get_ableton_connection()
+        params = {}
+        if root_note is not None: params["root_note"] = root_note
+        if scale_name is not None: params["scale_name"] = scale_name
+        result = ableton.send_command("set_song_scale", params)
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def get_track_meter_levels(ctx: Context, track_index: int) -> str:
+    """
+    Get the current meter levels for a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_track_meter_levels", {"track_index": track_index})
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def set_track_output_routing(ctx: Context, track_index: int, routing_type: str = "", routing_channel: str = "") -> str:
+    """
+    Set the output routing for a track.
+
+    Parameters:
+    - track_index: The index of the track to configure
+    - routing_type: The output device/type to route to (e.g., "Ext. Out", "Master Track")
+    - routing_channel: The specific output channel (e.g., "1/2", "3/4")
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_output_routing", {
+            "track_index": track_index,
+            "routing_type": routing_type,
+            "routing_channel": routing_channel
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def select_track(ctx: Context, track_index: int) -> str:
+    """Select a track in Ableton."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("select_track", {"track_index": track_index})
+        return f"Selected track: {result.get('name')}"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+@mcp.tool()
+def set_track_fold_state(ctx: Context, track_index: int, folded: bool) -> str:
+    """
+    Set the fold state of a group track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - folded: True to fold, False to unfold
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_fold_state", {
+            "track_index": track_index,
+            "folded": folded
+        })
+        if "error" in result: return f"Error: {result['error']}"
+        state = "folded" if result.get("folded") else "unfolded"
+        return f"Track {track_index} is now {state}"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 # Main execution
 def main():

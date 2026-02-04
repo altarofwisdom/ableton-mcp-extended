@@ -1,372 +1,244 @@
-SONG CALLABLE: View - <class 'Boost.Python.class'>
-2025-09-16T00:17:59.062217: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: View - <class 'Boost.Python.class'>
-SONG CALLABLE: add_appointed_device_listener - <class 'method'>
-2025-09-16T00:17:59.062327: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_appointed_device_listener - <class 'method'>
-SONG CALLABLE: add_arrangement_overdub_listener - <class 'method'>
-2025-09-16T00:17:59.062395: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_arrangement_overdub_listener - <class 'method'>
-SONG CALLABLE: add_back_to_arranger_listener - <class 'method'>
-2025-09-16T00:17:59.062453: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_back_to_arranger_listener - <class 'method'>
-SONG CALLABLE: add_can_capture_midi_listener - <class 'method'>
-2025-09-16T00:17:59.062494: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_can_capture_midi_listener - <class 'method'>
-SONG CALLABLE: add_can_jump_to_next_cue_listener - <class 'method'>
-2025-09-16T00:17:59.062538: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_can_jump_to_next_cue_listener - <class 'method'>
-SONG CALLABLE: add_can_jump_to_prev_cue_listener - <class 'method'>
-2025-09-16T00:17:59.062578: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_can_jump_to_prev_cue_listener - <class 'method'>
-SONG CALLABLE: add_clip_trigger_quantization_listener - <class 'method'>
-2025-09-16T00:17:59.062627: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_clip_trigger_quantization_listener - <class 'method'>
-SONG CALLABLE: add_count_in_duration_listener - <class 'method'>
-2025-09-16T00:17:59.062667: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_count_in_duration_listener - <class 'method'>
-SONG CALLABLE: add_cue_points_listener - <class 'method'>
-2025-09-16T00:17:59.062706: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_cue_points_listener - <class 'method'>
-SONG CALLABLE: add_current_song_time_listener - <class 'method'>
-2025-09-16T00:17:59.062744: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_current_song_time_listener - <class 'method'>
-SONG CALLABLE: add_data_listener - <class 'method'>
-2025-09-16T00:17:59.062779: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_data_listener - <class 'method'>
-SONG CALLABLE: add_exclusive_arm_listener - <class 'method'>
-2025-09-16T00:17:59.062816: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_exclusive_arm_listener - <class 'method'>
-SONG CALLABLE: add_groove_amount_listener - <class 'method'>
-2025-09-16T00:17:59.062851: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_groove_amount_listener - <class 'method'>
-SONG CALLABLE: add_is_ableton_link_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.062888: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_is_ableton_link_enabled_listener - <class 'method'>
-SONG CALLABLE: add_is_ableton_link_start_stop_sync_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.062926: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_is_ableton_link_start_stop_sync_enabled_listener - <class 'method'>
-SONG CALLABLE: add_is_counting_in_listener - <class 'method'>
-2025-09-16T00:17:59.062966: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_is_counting_in_listener - <class 'method'>
-SONG CALLABLE: add_is_playing_listener - <class 'method'>
-2025-09-16T00:17:59.063001: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_is_playing_listener - <class 'method'>
-SONG CALLABLE: add_loop_length_listener - <class 'method'>
-2025-09-16T00:17:59.063036: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_loop_length_listener - <class 'method'>
-SONG CALLABLE: add_loop_listener - <class 'method'>
-2025-09-16T00:17:59.063083: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_loop_listener - <class 'method'>
-SONG CALLABLE: add_loop_start_listener - <class 'method'>
-2025-09-16T00:17:59.063195: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_loop_start_listener - <class 'method'>
-SONG CALLABLE: add_metronome_listener - <class 'method'>
-2025-09-16T00:17:59.063310: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_metronome_listener - <class 'method'>
-SONG CALLABLE: add_midi_recording_quantization_listener - <class 'method'>
-2025-09-16T00:17:59.063450: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_midi_recording_quantization_listener - <class 'method'>
-SONG CALLABLE: add_nudge_down_listener - <class 'method'>
-2025-09-16T00:17:59.063501: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_nudge_down_listener - <class 'method'>
-SONG CALLABLE: add_nudge_up_listener - <class 'method'>
-2025-09-16T00:17:59.063541: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_nudge_up_listener - <class 'method'>
-SONG CALLABLE: add_overdub_listener - <class 'method'>
-2025-09-16T00:17:59.063580: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_overdub_listener - <class 'method'>
-SONG CALLABLE: add_punch_in_listener - <class 'method'>
-2025-09-16T00:17:59.063644: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_punch_in_listener - <class 'method'>
-SONG CALLABLE: add_punch_out_listener - <class 'method'>
-2025-09-16T00:17:59.063682: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_punch_out_listener - <class 'method'>
-SONG CALLABLE: add_re_enable_automation_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.063726: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_re_enable_automation_enabled_listener - <class 'method'>
-SONG CALLABLE: add_record_mode_listener - <class 'method'>
-2025-09-16T00:17:59.063764: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_record_mode_listener - <class 'method'>
-SONG CALLABLE: add_return_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.063808: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_return_tracks_listener - <class 'method'>
-SONG CALLABLE: add_root_note_listener - <class 'method'>
-2025-09-16T00:17:59.063916: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_root_note_listener - <class 'method'>
-SONG CALLABLE: add_scale_information_listener - <class 'method'>
-2025-09-16T00:17:59.063976: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_scale_information_listener - <class 'method'>
-SONG CALLABLE: add_scale_intervals_listener - <class 'method'>
-2025-09-16T00:17:59.064018: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_scale_intervals_listener - <class 'method'>
-SONG CALLABLE: add_scale_mode_listener - <class 'method'>
-2025-09-16T00:17:59.064058: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_scale_mode_listener - <class 'method'>
-SONG CALLABLE: add_scale_name_listener - <class 'method'>
-2025-09-16T00:17:59.064134: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_scale_name_listener - <class 'method'>
-SONG CALLABLE: add_scenes_listener - <class 'method'>
-2025-09-16T00:17:59.064186: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_scenes_listener - <class 'method'>
-SONG CALLABLE: add_session_automation_record_listener - <class 'method'>
-2025-09-16T00:17:59.064234: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_session_automation_record_listener - <class 'method'>
-SONG CALLABLE: add_session_record_listener - <class 'method'>
-2025-09-16T00:17:59.064275: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_session_record_listener - <class 'method'>
-SONG CALLABLE: add_session_record_status_listener - <class 'method'>
-2025-09-16T00:17:59.064313: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_session_record_status_listener - <class 'method'>
-SONG CALLABLE: add_signature_denominator_listener - <class 'method'>
-2025-09-16T00:17:59.064401: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_signature_denominator_listener - <class 'method'>
-SONG CALLABLE: add_signature_numerator_listener - <class 'method'>
-2025-09-16T00:17:59.064456: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_signature_numerator_listener - <class 'method'>
-SONG CALLABLE: add_song_length_listener - <class 'method'>
-2025-09-16T00:17:59.064497: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_song_length_listener - <class 'method'>
-SONG CALLABLE: add_start_time_listener - <class 'method'>
-2025-09-16T00:17:59.064534: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_start_time_listener - <class 'method'>
-SONG CALLABLE: add_swing_amount_listener - <class 'method'>
-2025-09-16T00:17:59.064571: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_swing_amount_listener - <class 'method'>
-SONG CALLABLE: add_tempo_follower_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.064608: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_tempo_follower_enabled_listener - <class 'method'>
-SONG CALLABLE: add_tempo_listener - <class 'method'>
-2025-09-16T00:17:59.064644: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_tempo_listener - <class 'method'>
-SONG CALLABLE: add_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.064681: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_tracks_listener - <class 'method'>
-SONG CALLABLE: add_tuning_system_listener - <class 'method'>
-2025-09-16T00:17:59.064717: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_tuning_system_listener - <class 'method'>
-SONG CALLABLE: add_visible_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.064753: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: add_visible_tracks_listener - <class 'method'>
-SONG CALLABLE: appointed_device_has_listener - <class 'method'>
-2025-09-16T00:17:59.064836: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: appointed_device_has_listener - <class 'method'>
-SONG CALLABLE: arrangement_overdub_has_listener - <class 'method'>
-2025-09-16T00:17:59.064912: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: arrangement_overdub_has_listener - <class 'method'>
-SONG CALLABLE: back_to_arranger_has_listener - <class 'method'>
-2025-09-16T00:17:59.064988: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: back_to_arranger_has_listener - <class 'method'>
-SONG CALLABLE: begin_undo_step - <class 'method'>
-2025-09-16T00:17:59.065024: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: begin_undo_step - <class 'method'>
-SONG CALLABLE: can_capture_midi_has_listener - <class 'method'>
-2025-09-16T00:17:59.065113: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: can_capture_midi_has_listener - <class 'method'>
-SONG CALLABLE: can_jump_to_next_cue_has_listener - <class 'method'>
-2025-09-16T00:17:59.065282: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: can_jump_to_next_cue_has_listener - <class 'method'>
-SONG CALLABLE: can_jump_to_prev_cue_has_listener - <class 'method'>
-2025-09-16T00:17:59.065471: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: can_jump_to_prev_cue_has_listener - <class 'method'>
-SONG CALLABLE: capture_and_insert_scene - <class 'method'>
-2025-09-16T00:17:59.065670: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: capture_and_insert_scene - <class 'method'>
-SONG CALLABLE: capture_midi - <class 'method'>
-2025-09-16T00:17:59.065708: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: capture_midi - <class 'method'>
-SONG CALLABLE: clip_trigger_quantization_has_listener - <class 'method'>
-2025-09-16T00:17:59.160943: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: clip_trigger_quantization_has_listener - <class 'method'>
-SONG CALLABLE: continue_playing - <class 'method'>
-2025-09-16T00:17:59.161164: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: continue_playing - <class 'method'>
-SONG CALLABLE: count_in_duration_has_listener - <class 'method'>
-2025-09-16T00:17:59.161288: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: count_in_duration_has_listener - <class 'method'>
-SONG CALLABLE: create_audio_track - <class 'method'>
-2025-09-16T00:17:59.161330: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: create_audio_track - <class 'method'>
-SONG CALLABLE: create_midi_track - <class 'method'>
-2025-09-16T00:17:59.161369: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: create_midi_track - <class 'method'>
-SONG CALLABLE: create_return_track - <class 'method'>
-2025-09-16T00:17:59.161406: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: create_return_track - <class 'method'>
-SONG CALLABLE: create_scene - <class 'method'>
-2025-09-16T00:17:59.161444: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: create_scene - <class 'method'>
-SONG CALLABLE: cue_points_has_listener - <class 'method'>
-2025-09-16T00:17:59.161532: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: cue_points_has_listener - <class 'method'>
-SONG CALLABLE: current_song_time_has_listener - <class 'method'>
-2025-09-16T00:17:59.161609: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: current_song_time_has_listener - <class 'method'>
-SONG CALLABLE: data_has_listener - <class 'method'>
-2025-09-16T00:17:59.161646: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: data_has_listener - <class 'method'>
-SONG CALLABLE: delete_return_track - <class 'method'>
-2025-09-16T00:17:59.161682: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: delete_return_track - <class 'method'>
-SONG CALLABLE: delete_scene - <class 'method'>
-2025-09-16T00:17:59.161718: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: delete_scene - <class 'method'>
-SONG CALLABLE: delete_track - <class 'method'>
-2025-09-16T00:17:59.161753: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: delete_track - <class 'method'>
-SONG CALLABLE: duplicate_scene - <class 'method'>
-2025-09-16T00:17:59.161801: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: duplicate_scene - <class 'method'>
-SONG CALLABLE: duplicate_track - <class 'method'>
-2025-09-16T00:17:59.161845: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: duplicate_track - <class 'method'>
-SONG CALLABLE: end_undo_step - <class 'method'>
-2025-09-16T00:17:59.161881: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: end_undo_step - <class 'method'>
-SONG CALLABLE: exclusive_arm_has_listener - <class 'method'>
-2025-09-16T00:17:59.161988: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: exclusive_arm_has_listener - <class 'method'>
-SONG CALLABLE: find_device_position - <class 'method'>
-2025-09-16T00:17:59.162135: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: find_device_position - <class 'method'>
-SONG CALLABLE: force_link_beat_time - <class 'method'>
-2025-09-16T00:17:59.162253: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: force_link_beat_time - <class 'method'>
-SONG CALLABLE: get_beats_loop_length - <class 'method'>
-2025-09-16T00:17:59.162366: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: get_beats_loop_length - <class 'method'>
-SONG CALLABLE: get_beats_loop_start - <class 'method'>
-2025-09-16T00:17:59.162405: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: get_beats_loop_start - <class 'method'>
-SONG CALLABLE: get_current_beats_song_time - <class 'method'>
-2025-09-16T00:17:59.162444: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: get_current_beats_song_time - <class 'method'>
-SONG CALLABLE: get_current_smpte_song_time - <class 'method'>
-2025-09-16T00:17:59.162483: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: get_current_smpte_song_time - <class 'method'>
-SONG CALLABLE: get_data - <class 'method'>
-2025-09-16T00:17:59.162536: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: get_data - <class 'method'>
-SONG CALLABLE: groove_amount_has_listener - <class 'method'>
-2025-09-16T00:17:59.162615: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: groove_amount_has_listener - <class 'method'>
-SONG CALLABLE: is_ableton_link_enabled_has_listener - <class 'method'>
-2025-09-16T00:17:59.162832: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: is_ableton_link_enabled_has_listener - <class 'method'>
-SONG CALLABLE: is_ableton_link_start_stop_sync_enabled_has_listener - <class 'method'>
-2025-09-16T00:17:59.162925: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: is_ableton_link_start_stop_sync_enabled_has_listener - <class 'method'>
-SONG CALLABLE: is_counting_in_has_listener - <class 'method'>
-2025-09-16T00:17:59.163009: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: is_counting_in_has_listener - <class 'method'>
-SONG CALLABLE: is_cue_point_selected - <class 'method'>
-2025-09-16T00:17:59.163044: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: is_cue_point_selected - <class 'method'>
-SONG CALLABLE: is_playing_has_listener - <class 'method'>
-2025-09-16T00:17:59.163120: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: is_playing_has_listener - <class 'method'>
-SONG CALLABLE: jump_by - <class 'method'>
-2025-09-16T00:17:59.163156: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: jump_by - <class 'method'>
-SONG CALLABLE: jump_to_next_cue - <class 'method'>
-2025-09-16T00:17:59.163193: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: jump_to_next_cue - <class 'method'>
-SONG CALLABLE: jump_to_prev_cue - <class 'method'>
-2025-09-16T00:17:59.163232: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: jump_to_prev_cue - <class 'method'>
-SONG CALLABLE: loop_has_listener - <class 'method'>
-2025-09-16T00:17:59.163354: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: loop_has_listener - <class 'method'>
-SONG CALLABLE: loop_length_has_listener - <class 'method'>
-2025-09-16T00:17:59.163427: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: loop_length_has_listener - <class 'method'>
-SONG CALLABLE: loop_start_has_listener - <class 'method'>
-2025-09-16T00:17:59.163504: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: loop_start_has_listener - <class 'method'>
-SONG CALLABLE: metronome_has_listener - <class 'method'>
-2025-09-16T00:17:59.163630: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: metronome_has_listener - <class 'method'>
-SONG CALLABLE: midi_recording_quantization_has_listener - <class 'method'>
-2025-09-16T00:17:59.163716: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: midi_recording_quantization_has_listener - <class 'method'>
-SONG CALLABLE: move_device - <class 'method'>
-2025-09-16T00:17:59.163753: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: move_device - <class 'method'>
-SONG CALLABLE: nudge_down_has_listener - <class 'method'>
-2025-09-16T00:17:59.163872: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: nudge_down_has_listener - <class 'method'>
-SONG CALLABLE: nudge_up_has_listener - <class 'method'>
-2025-09-16T00:17:59.163946: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: nudge_up_has_listener - <class 'method'>
-SONG CALLABLE: overdub_has_listener - <class 'method'>
-2025-09-16T00:17:59.164022: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: overdub_has_listener - <class 'method'>
-SONG CALLABLE: play_selection - <class 'method'>
-2025-09-16T00:17:59.164077: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: play_selection - <class 'method'>
-SONG CALLABLE: punch_in_has_listener - <class 'method'>
-2025-09-16T00:17:59.164232: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: punch_in_has_listener - <class 'method'>
-SONG CALLABLE: punch_out_has_listener - <class 'method'>
-2025-09-16T00:17:59.164336: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: punch_out_has_listener - <class 'method'>
-SONG CALLABLE: re_enable_automation - <class 'method'>
-2025-09-16T00:17:59.164384: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: re_enable_automation - <class 'method'>
-SONG CALLABLE: re_enable_automation_enabled_has_listener - <class 'method'>
-2025-09-16T00:17:59.164697: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: re_enable_automation_enabled_has_listener - <class 'method'>
-SONG CALLABLE: record_mode_has_listener - <class 'method'>
-2025-09-16T00:17:59.164824: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: record_mode_has_listener - <class 'method'>
-SONG CALLABLE: redo - <class 'method'>
-2025-09-16T00:17:59.164865: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: redo - <class 'method'>
-SONG CALLABLE: remove_appointed_device_listener - <class 'method'>
-2025-09-16T00:17:59.165040: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_appointed_device_listener - <class 'method'>
-SONG CALLABLE: remove_arrangement_overdub_listener - <class 'method'>
-2025-09-16T00:17:59.165103: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_arrangement_overdub_listener - <class 'method'>
-SONG CALLABLE: remove_back_to_arranger_listener - <class 'method'>
-2025-09-16T00:17:59.165150: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_back_to_arranger_listener - <class 'method'>
-SONG CALLABLE: remove_can_capture_midi_listener - <class 'method'>
-2025-09-16T00:17:59.165202: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_can_capture_midi_listener - <class 'method'>
-SONG CALLABLE: remove_can_jump_to_next_cue_listener - <class 'method'>
-2025-09-16T00:17:59.165243: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_can_jump_to_next_cue_listener - <class 'method'>
-SONG CALLABLE: remove_can_jump_to_prev_cue_listener - <class 'method'>
-2025-09-16T00:17:59.165290: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_can_jump_to_prev_cue_listener - <class 'method'>
-SONG CALLABLE: remove_clip_trigger_quantization_listener - <class 'method'>
-2025-09-16T00:17:59.165349: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_clip_trigger_quantization_listener - <class 'method'>
-SONG CALLABLE: remove_count_in_duration_listener - <class 'method'>
-2025-09-16T00:17:59.165394: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_count_in_duration_listener - <class 'method'>
-SONG CALLABLE: remove_cue_points_listener - <class 'method'>
-2025-09-16T00:17:59.165431: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_cue_points_listener - <class 'method'>
-SONG CALLABLE: remove_current_song_time_listener - <class 'method'>
-2025-09-16T00:17:59.165474: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_current_song_time_listener - <class 'method'>
-SONG CALLABLE: remove_data_listener - <class 'method'>
-2025-09-16T00:17:59.165510: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_data_listener - <class 'method'>
-SONG CALLABLE: remove_exclusive_arm_listener - <class 'method'>
-2025-09-16T00:17:59.165548: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_exclusive_arm_listener - <class 'method'>
-SONG CALLABLE: remove_groove_amount_listener - <class 'method'>
-2025-09-16T00:17:59.165586: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_groove_amount_listener - <class 'method'>
-SONG CALLABLE: remove_is_ableton_link_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.165625: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_is_ableton_link_enabled_listener - <class 'method'>
-SONG CALLABLE: remove_is_ableton_link_start_stop_sync_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.165665: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_is_ableton_link_start_stop_sync_enabled_listener - <class 'method'>
-SONG CALLABLE: remove_is_counting_in_listener - <class 'method'>
-2025-09-16T00:17:59.165767: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_is_counting_in_listener - <class 'method'>
-SONG CALLABLE: remove_is_playing_listener - <class 'method'>
-2025-09-16T00:17:59.165820: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_is_playing_listener - <class 'method'>
-SONG CALLABLE: remove_loop_length_listener - <class 'method'>
-2025-09-16T00:17:59.165867: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_loop_length_listener - <class 'method'>
-SONG CALLABLE: remove_loop_listener - <class 'method'>
-2025-09-16T00:17:59.165910: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_loop_listener - <class 'method'>
-SONG CALLABLE: remove_loop_start_listener - <class 'method'>
-2025-09-16T00:17:59.165951: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_loop_start_listener - <class 'method'>
-SONG CALLABLE: remove_metronome_listener - <class 'method'>
-2025-09-16T00:17:59.261277: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_metronome_listener - <class 'method'>
-SONG CALLABLE: remove_midi_recording_quantization_listener - <class 'method'>
-2025-09-16T00:17:59.261542: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_midi_recording_quantization_listener - <class 'method'>
-SONG CALLABLE: remove_nudge_down_listener - <class 'method'>
-2025-09-16T00:17:59.261591: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_nudge_down_listener - <class 'method'>
-SONG CALLABLE: remove_nudge_up_listener - <class 'method'>
-2025-09-16T00:17:59.261630: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_nudge_up_listener - <class 'method'>
-SONG CALLABLE: remove_overdub_listener - <class 'method'>
-2025-09-16T00:17:59.261669: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_overdub_listener - <class 'method'>
-SONG CALLABLE: remove_punch_in_listener - <class 'method'>
-2025-09-16T00:17:59.261711: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_punch_in_listener - <class 'method'>
-SONG CALLABLE: remove_punch_out_listener - <class 'method'>
-2025-09-16T00:17:59.261745: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_punch_out_listener - <class 'method'>
-SONG CALLABLE: remove_re_enable_automation_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.261782: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_re_enable_automation_enabled_listener - <class 'method'>
-SONG CALLABLE: remove_record_mode_listener - <class 'method'>
-2025-09-16T00:17:59.261816: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_record_mode_listener - <class 'method'>
-SONG CALLABLE: remove_return_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.261849: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_return_tracks_listener - <class 'method'>
-SONG CALLABLE: remove_root_note_listener - <class 'method'>
-2025-09-16T00:17:59.261882: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_root_note_listener - <class 'method'>
-SONG CALLABLE: remove_scale_information_listener - <class 'method'>
-2025-09-16T00:17:59.261915: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_scale_information_listener - <class 'method'>
-SONG CALLABLE: remove_scale_intervals_listener - <class 'method'>
-2025-09-16T00:17:59.261948: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_scale_intervals_listener - <class 'method'>
-SONG CALLABLE: remove_scale_mode_listener - <class 'method'>
-2025-09-16T00:17:59.261983: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_scale_mode_listener - <class 'method'>
-SONG CALLABLE: remove_scale_name_listener - <class 'method'>
-2025-09-16T00:17:59.262016: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_scale_name_listener - <class 'method'>
-SONG CALLABLE: remove_scenes_listener - <class 'method'>
-2025-09-16T00:17:59.262054: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_scenes_listener - <class 'method'>
-SONG CALLABLE: remove_session_automation_record_listener - <class 'method'>
-2025-09-16T00:17:59.262197: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_session_automation_record_listener - <class 'method'>
-SONG CALLABLE: remove_session_record_listener - <class 'method'>
-2025-09-16T00:17:59.262302: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_session_record_listener - <class 'method'>
-SONG CALLABLE: remove_session_record_status_listener - <class 'method'>
-2025-09-16T00:17:59.262351: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_session_record_status_listener - <class 'method'>
-SONG CALLABLE: remove_signature_denominator_listener - <class 'method'>
-2025-09-16T00:17:59.262391: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_signature_denominator_listener - <class 'method'>
-SONG CALLABLE: remove_signature_numerator_listener - <class 'method'>
-2025-09-16T00:17:59.262429: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_signature_numerator_listener - <class 'method'>
-SONG CALLABLE: remove_song_length_listener - <class 'method'>
-2025-09-16T00:17:59.262465: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_song_length_listener - <class 'method'>
-SONG CALLABLE: remove_start_time_listener - <class 'method'>
-2025-09-16T00:17:59.262500: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_start_time_listener - <class 'method'>
-SONG CALLABLE: remove_swing_amount_listener - <class 'method'>
-2025-09-16T00:17:59.262537: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_swing_amount_listener - <class 'method'>
-SONG CALLABLE: remove_tempo_follower_enabled_listener - <class 'method'>
-2025-09-16T00:17:59.262570: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_tempo_follower_enabled_listener - <class 'method'>
-SONG CALLABLE: remove_tempo_listener - <class 'method'>
-2025-09-16T00:17:59.262604: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_tempo_listener - <class 'method'>
-SONG CALLABLE: remove_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.262638: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_tracks_listener - <class 'method'>
-SONG CALLABLE: remove_tuning_system_listener - <class 'method'>
-2025-09-16T00:17:59.262674: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_tuning_system_listener - <class 'method'>
-SONG CALLABLE: remove_visible_tracks_listener - <class 'method'>
-2025-09-16T00:17:59.262711: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: remove_visible_tracks_listener - <class 'method'>
-SONG CALLABLE: return_tracks_has_listener - <class 'method'>
-2025-09-16T00:17:59.262787: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: return_tracks_has_listener - <class 'method'>
-SONG CALLABLE: root_note_has_listener - <class 'method'>
-2025-09-16T00:17:59.262855: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: root_note_has_listener - <class 'method'>
-SONG CALLABLE: scale_information_has_listener - <class 'method'>
-2025-09-16T00:17:59.262887: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scale_information_has_listener - <class 'method'>
-SONG CALLABLE: scale_intervals_has_listener - <class 'method'>
-2025-09-16T00:17:59.262980: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scale_intervals_has_listener - <class 'method'>
-SONG CALLABLE: scale_mode_has_listener - <class 'method'>
-2025-09-16T00:17:59.263054: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scale_mode_has_listener - <class 'method'>
-SONG CALLABLE: scale_name_has_listener - <class 'method'>
-2025-09-16T00:17:59.263127: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scale_name_has_listener - <class 'method'>
-SONG CALLABLE: scenes_has_listener - <class 'method'>
-2025-09-16T00:17:59.263201: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scenes_has_listener - <class 'method'>
-SONG CALLABLE: scrub_by - <class 'method'>
-2025-09-16T00:17:59.263236: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: scrub_by - <class 'method'>
-SONG CALLABLE: session_automation_record_has_listener - <class 'method'>
-2025-09-16T00:17:59.263350: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: session_automation_record_has_listener - <class 'method'>
-SONG CALLABLE: session_record_has_listener - <class 'method'>
-2025-09-16T00:17:59.263424: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: session_record_has_listener - <class 'method'>
-SONG CALLABLE: session_record_status_has_listener - <class 'method'>
-2025-09-16T00:17:59.263510: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: session_record_status_has_listener - <class 'method'>
-SONG CALLABLE: set_data - <class 'method'>
-2025-09-16T00:17:59.263543: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: set_data - <class 'method'>
-SONG CALLABLE: set_or_delete_cue - <class 'method'>
-2025-09-16T00:17:59.263576: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: set_or_delete_cue - <class 'method'>
-SONG CALLABLE: signature_denominator_has_listener - <class 'method'>
-2025-09-16T00:17:59.263652: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: signature_denominator_has_listener - <class 'method'>
-SONG CALLABLE: signature_numerator_has_listener - <class 'method'>
-2025-09-16T00:17:59.263727: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: signature_numerator_has_listener - <class 'method'>
-SONG CALLABLE: song_length_has_listener - <class 'method'>
-2025-09-16T00:17:59.263988: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: song_length_has_listener - <class 'method'>
-SONG CALLABLE: start_playing - <class 'method'>
-2025-09-16T00:17:59.264032: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: start_playing - <class 'method'>
-SONG CALLABLE: start_time_has_listener - <class 'method'>
-2025-09-16T00:17:59.264118: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: start_time_has_listener - <class 'method'>
-SONG CALLABLE: stop_all_clips - <class 'method'>
-2025-09-16T00:17:59.264163: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: stop_all_clips - <class 'method'>
-SONG CALLABLE: stop_playing - <class 'method'>
-2025-09-16T00:17:59.264202: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: stop_playing - <class 'method'>
-SONG CALLABLE: swing_amount_has_listener - <class 'method'>
-2025-09-16T00:17:59.264270: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: swing_amount_has_listener - <class 'method'>
-SONG CALLABLE: tap_tempo - <class 'method'>
-2025-09-16T00:17:59.264303: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: tap_tempo - <class 'method'>
-SONG CALLABLE: tempo_follower_enabled_has_listener - <class 'method'>
-2025-09-16T00:17:59.264449: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: tempo_follower_enabled_has_listener - <class 'method'>
-SONG CALLABLE: tempo_has_listener - <class 'method'>
-2025-09-16T00:17:59.264501: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: tempo_has_listener - <class 'method'>
-SONG CALLABLE: tracks_has_listener - <class 'method'>
-2025-09-16T00:17:59.264583: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: tracks_has_listener - <class 'method'>
-SONG CALLABLE: trigger_session_record - <class 'method'>
-2025-09-16T00:17:59.264617: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: trigger_session_record - <class 'method'>
-SONG CALLABLE: tuning_system_has_listener - <class 'method'>
-2025-09-16T00:17:59.264690: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: tuning_system_has_listener - <class 'method'>
-SONG CALLABLE: undo - <class 'method'>
-2025-09-16T00:17:59.264730: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: undo - <class 'method'>
-SONG CALLABLE: visible_tracks_has_listener - <class 'method'>
-2025-09-16T00:17:59.264856: info: RemoteScriptMessage: (AbletonMCP) SONG CALLABLE: visible_tracks_has_listener - <class 'method'>
+SONG CALLABLE: View
+SONG CALLABLE: add_appointed_device_listener
+SONG CALLABLE: add_arrangement_overdub_listener
+SONG CALLABLE: add_back_to_arranger_listener
+SONG CALLABLE: add_can_capture_midi_listener
+SONG CALLABLE: add_can_jump_to_next_cue_listener
+SONG CALLABLE: add_can_jump_to_prev_cue_listener
+SONG CALLABLE: add_clip_trigger_quantization_listener
+SONG CALLABLE: add_count_in_duration_listener
+SONG CALLABLE: add_cue_points_listener
+SONG CALLABLE: add_current_song_time_listener
+SONG CALLABLE: add_data_listener
+SONG CALLABLE: add_exclusive_arm_listener
+SONG CALLABLE: add_groove_amount_listener
+SONG CALLABLE: add_is_ableton_link_enabled_listener
+SONG CALLABLE: add_is_ableton_link_start_stop_sync_enabled_listener
+SONG CALLABLE: add_is_counting_in_listener
+SONG CALLABLE: add_is_playing_listener
+SONG CALLABLE: add_loop_length_listener
+SONG CALLABLE: add_loop_listener
+SONG CALLABLE: add_loop_start_listener
+SONG CALLABLE: add_metronome_listener
+SONG CALLABLE: add_midi_recording_quantization_listener
+SONG CALLABLE: add_nudge_down_listener
+SONG CALLABLE: add_nudge_up_listener
+SONG CALLABLE: add_overdub_listener
+SONG CALLABLE: add_punch_in_listener
+SONG CALLABLE: add_punch_out_listener
+SONG CALLABLE: add_re_enable_automation_enabled_listener
+SONG CALLABLE: add_record_mode_listener
+SONG CALLABLE: add_return_tracks_listener
+SONG CALLABLE: add_root_note_listener
+SONG CALLABLE: add_scale_information_listener
+SONG CALLABLE: add_scale_intervals_listener
+SONG CALLABLE: add_scale_mode_listener
+SONG CALLABLE: add_scale_name_listener
+SONG CALLABLE: add_scenes_listener
+SONG CALLABLE: add_session_automation_record_listener
+SONG CALLABLE: add_session_record_listener
+SONG CALLABLE: add_session_record_status_listener
+SONG CALLABLE: add_signature_denominator_listener
+SONG CALLABLE: add_signature_numerator_listener
+SONG CALLABLE: add_song_length_listener
+SONG CALLABLE: add_start_time_listener
+SONG CALLABLE: add_swing_amount_listener
+SONG CALLABLE: add_tempo_follower_enabled_listener
+SONG CALLABLE: add_tempo_listener
+SONG CALLABLE: add_tracks_listener
+SONG CALLABLE: add_tuning_system_listener
+SONG CALLABLE: add_visible_tracks_listener
+SONG PROPERTY: appointed_device
+SONG CALLABLE: appointed_device_has_listener
+SONG PROPERTY: arrangement_overdub
+SONG CALLABLE: arrangement_overdub_has_listener
+SONG PROPERTY: back_to_arranger
+SONG CALLABLE: back_to_arranger_has_listener
+SONG CALLABLE: begin_undo_step
+SONG PROPERTY: can_capture_midi
+SONG CALLABLE: can_capture_midi_has_listener
+SONG PROPERTY: can_jump_to_next_cue
+SONG CALLABLE: can_jump_to_next_cue_has_listener
+SONG PROPERTY: can_jump_to_prev_cue
+SONG CALLABLE: can_jump_to_prev_cue_has_listener
+SONG PROPERTY: can_redo
+SONG PROPERTY: can_undo
+SONG PROPERTY: canonical_parent
+SONG CALLABLE: capture_and_insert_scene
+SONG CALLABLE: capture_midi
+SONG PROPERTY: clip_trigger_quantization
+SONG CALLABLE: clip_trigger_quantization_has_listener
+SONG CALLABLE: continue_playing
+SONG PROPERTY: count_in_duration
+SONG CALLABLE: count_in_duration_has_listener
+SONG CALLABLE: create_audio_track
+SONG CALLABLE: create_midi_track
+SONG CALLABLE: create_return_track
+SONG CALLABLE: create_scene
+SONG PROPERTY: cue_points
+SONG CALLABLE: cue_points_has_listener
+SONG PROPERTY: current_song_time
+SONG CALLABLE: current_song_time_has_listener
+SONG CALLABLE: data_has_listener
+SONG CALLABLE: delete_return_track
+SONG CALLABLE: delete_scene
+SONG CALLABLE: delete_track
+SONG CALLABLE: duplicate_scene
+SONG CALLABLE: duplicate_track
+SONG CALLABLE: end_undo_step
+SONG PROPERTY: exclusive_arm
+SONG CALLABLE: exclusive_arm_has_listener
+SONG PROPERTY: exclusive_solo
+SONG PROPERTY: file_path
+SONG CALLABLE: find_device_position
+SONG CALLABLE: force_link_beat_time
+SONG CALLABLE: get_beats_loop_length
+SONG CALLABLE: get_beats_loop_start
+SONG CALLABLE: get_current_beats_song_time
+SONG CALLABLE: get_current_smpte_song_time
+SONG CALLABLE: get_data
+SONG PROPERTY: groove_amount
+SONG CALLABLE: groove_amount_has_listener
+SONG PROPERTY: groove_pool
+SONG PROPERTY: is_ableton_link_enabled
+SONG CALLABLE: is_ableton_link_enabled_has_listener
+SONG PROPERTY: is_ableton_link_start_stop_sync_enabled
+SONG CALLABLE: is_ableton_link_start_stop_sync_enabled_has_listener
+SONG PROPERTY: is_counting_in
+SONG CALLABLE: is_counting_in_has_listener
+SONG CALLABLE: is_cue_point_selected
+SONG PROPERTY: is_playing
+SONG CALLABLE: is_playing_has_listener
+SONG CALLABLE: jump_by
+SONG CALLABLE: jump_to_next_cue
+SONG CALLABLE: jump_to_prev_cue
+SONG PROPERTY: last_event_time
+SONG PROPERTY: loop
+SONG CALLABLE: loop_has_listener
+SONG PROPERTY: loop_length
+SONG CALLABLE: loop_length_has_listener
+SONG PROPERTY: loop_start
+SONG CALLABLE: loop_start_has_listener
+SONG PROPERTY: master_track
+SONG PROPERTY: metronome
+SONG CALLABLE: metronome_has_listener
+SONG PROPERTY: midi_recording_quantization
+SONG CALLABLE: midi_recording_quantization_has_listener
+SONG CALLABLE: move_device
+SONG PROPERTY: name
+SONG PROPERTY: nudge_down
+SONG CALLABLE: nudge_down_has_listener
+SONG PROPERTY: nudge_up
+SONG CALLABLE: nudge_up_has_listener
+SONG PROPERTY: overdub
+SONG CALLABLE: overdub_has_listener
+SONG CALLABLE: play_selection
+SONG PROPERTY: punch_in
+SONG CALLABLE: punch_in_has_listener
+SONG PROPERTY: punch_out
+SONG CALLABLE: punch_out_has_listener
+SONG CALLABLE: re_enable_automation
+SONG PROPERTY: re_enable_automation_enabled
+SONG CALLABLE: re_enable_automation_enabled_has_listener
+SONG PROPERTY: record_mode
+SONG CALLABLE: record_mode_has_listener
+SONG CALLABLE: redo
+SONG CALLABLE: remove_appointed_device_listener
+SONG CALLABLE: remove_arrangement_overdub_listener
+SONG CALLABLE: remove_back_to_arranger_listener
+SONG CALLABLE: remove_can_capture_midi_listener
+SONG CALLABLE: remove_can_jump_to_next_cue_listener
+SONG CALLABLE: remove_can_jump_to_prev_cue_listener
+SONG CALLABLE: remove_clip_trigger_quantization_listener
+SONG CALLABLE: remove_count_in_duration_listener
+SONG CALLABLE: remove_cue_points_listener
+SONG CALLABLE: remove_current_song_time_listener
+SONG CALLABLE: remove_data_listener
+SONG CALLABLE: remove_exclusive_arm_listener
+SONG CALLABLE: remove_groove_amount_listener
+SONG CALLABLE: remove_is_ableton_link_enabled_listener
+SONG CALLABLE: remove_is_ableton_link_start_stop_sync_enabled_listener
+SONG CALLABLE: remove_is_counting_in_listener
+SONG CALLABLE: remove_is_playing_listener
+SONG CALLABLE: remove_loop_length_listener
+SONG CALLABLE: remove_loop_listener
+SONG CALLABLE: remove_loop_start_listener
+SONG CALLABLE: remove_metronome_listener
+SONG CALLABLE: remove_midi_recording_quantization_listener
+SONG CALLABLE: remove_nudge_down_listener
+SONG CALLABLE: remove_nudge_up_listener
+SONG CALLABLE: remove_overdub_listener
+SONG CALLABLE: remove_punch_in_listener
+SONG CALLABLE: remove_punch_out_listener
+SONG CALLABLE: remove_re_enable_automation_enabled_listener
+SONG CALLABLE: remove_record_mode_listener
+SONG CALLABLE: remove_return_tracks_listener
+SONG CALLABLE: remove_root_note_listener
+SONG CALLABLE: remove_scale_information_listener
+SONG CALLABLE: remove_scale_intervals_listener
+SONG CALLABLE: remove_scale_mode_listener
+SONG CALLABLE: remove_scale_name_listener
+SONG CALLABLE: remove_scenes_listener
+SONG CALLABLE: remove_session_automation_record_listener
+SONG CALLABLE: remove_session_record_listener
+SONG CALLABLE: remove_session_record_status_listener
+SONG CALLABLE: remove_signature_denominator_listener
+SONG CALLABLE: remove_signature_numerator_listener
+SONG CALLABLE: remove_song_length_listener
+SONG CALLABLE: remove_start_time_listener
+SONG CALLABLE: remove_swing_amount_listener
+SONG CALLABLE: remove_tempo_follower_enabled_listener
+SONG CALLABLE: remove_tempo_listener
+SONG CALLABLE: remove_tracks_listener
+SONG CALLABLE: remove_tuning_system_listener
+SONG CALLABLE: remove_visible_tracks_listener
+SONG PROPERTY: return_tracks
+SONG CALLABLE: return_tracks_has_listener
+SONG PROPERTY: root_note
+SONG CALLABLE: root_note_has_listener
+SONG CALLABLE: scale_information_has_listener
+SONG PROPERTY: scale_intervals
+SONG CALLABLE: scale_intervals_has_listener
+SONG PROPERTY: scale_mode
+SONG CALLABLE: scale_mode_has_listener
+SONG PROPERTY: scale_name
+SONG CALLABLE: scale_name_has_listener
+SONG PROPERTY: scenes
+SONG CALLABLE: scenes_has_listener
+SONG CALLABLE: scrub_by
+SONG PROPERTY: select_on_launch
+SONG PROPERTY: session_automation_record
+SONG CALLABLE: session_automation_record_has_listener
+SONG PROPERTY: session_record
+SONG CALLABLE: session_record_has_listener
+SONG PROPERTY: session_record_status
+SONG CALLABLE: session_record_status_has_listener
+SONG CALLABLE: set_data
+SONG CALLABLE: set_or_delete_cue
+SONG PROPERTY: signature_denominator
+SONG CALLABLE: signature_denominator_has_listener
+SONG PROPERTY: signature_numerator
+SONG CALLABLE: signature_numerator_has_listener
+SONG PROPERTY: song_length
+SONG CALLABLE: song_length_has_listener
+SONG CALLABLE: start_playing
+SONG PROPERTY: start_time
+SONG CALLABLE: start_time_has_listener
+SONG CALLABLE: stop_all_clips
+SONG CALLABLE: stop_playing
+SONG PROPERTY: swing_amount
+SONG CALLABLE: swing_amount_has_listener
+SONG CALLABLE: tap_tempo
+SONG PROPERTY: tempo
+SONG PROPERTY: tempo_follower_enabled
+SONG CALLABLE: tempo_follower_enabled_has_listener
+SONG CALLABLE: tempo_has_listener
+SONG PROPERTY: tracks
+SONG CALLABLE: tracks_has_listener
+SONG CALLABLE: trigger_session_record
+SONG PROPERTY: tuning_system
+SONG CALLABLE: tuning_system_has_listener
+SONG CALLABLE: undo
+SONG PROPERTY: view
+SONG PROPERTY: visible_tracks
+SONG CALLABLE: visible_tracks_has_listener

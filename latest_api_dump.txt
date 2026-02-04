@@ -1,3 +1,4 @@
+=== COMPREHENSIVE API EXPLORATION START ===
 SONG CALLABLE: View
 SONG CALLABLE: add_appointed_device_listener
 SONG CALLABLE: add_arrangement_overdub_listener
@@ -450,3 +451,4 @@ TRACK: stop_all_clips
 TRACK: take_lanes
 TRACK: take_lanes_has_listener
 TRACK: view
+=== COMPREHENSIVE API EXPLORATION END ===
