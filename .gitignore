@@ -23,6 +23,7 @@ ENV/
 # System files
 .DS_Store
 Thumbs.db
+.gemini/
 
 # Audio files
 *.mp3
