@@ -105,7 +105,11 @@ class AbletonConnection:
             "create_midi_track", "create_audio_track", "set_track_name",
             "create_clip", "add_notes_to_clip", "set_clip_name",
             "set_tempo", "fire_clip", "stop_clip", "set_device_parameter",
-            "start_playback", "stop_playback", "load_instrument_or_effect"
+            "start_playback", "stop_playback", "load_instrument_or_effect",
+            "delete_track", "duplicate_track", "create_return_track",
+            "create_scene", "delete_scene", "duplicate_scene", "capture_and_insert_scene",
+            "stop_all_clips", "trigger_session_record", "set_track_monitoring", "tap_tempo",
+            "jump_by", "scrub_by", "duplicate_clip_to_arrangement", "set_track_frozen", "create_take_lane"
         ]
         
         try:
@@ -316,6 +320,49 @@ def create_audio_track(ctx: Context, index: int = -1) -> str:
         logger.error(f"Error creating audio track: {str(e)}")
         return f"Error creating audio track: {str(e)}"
 
+@mcp.tool()
+def delete_track(ctx: Context, track_index: int) -> str:
+    """
+    Delete a track from the Ableton session.
+
+    Parameters:
+    - track_index: The index of the track to delete
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("delete_track", {"track_index": track_index})
+        return f"Deleted track at index {track_index}"
+    except Exception as e:
+        logger.error(f"Error deleting track: {str(e)}")
+        return f"Error deleting track: {str(e)}"
+
+@mcp.tool()
+def duplicate_track(ctx: Context, track_index: int) -> str:
+    """
+    Duplicate an existing track.
+
+    Parameters:
+    - track_index: The index of the track to duplicate
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("duplicate_track", {"track_index": track_index})
+        return f"Duplicated track at index {track_index}"
+    except Exception as e:
+        logger.error(f"Error duplicating track: {str(e)}")
+        return f"Error duplicating track: {str(e)}"
+
+@mcp.tool()
+def create_return_track(ctx: Context) -> str:
+    """Create a new return track in the Ableton session."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("create_return_track")
+        return "Created new return track"
+    except Exception as e:
+        logger.error(f"Error creating return track: {str(e)}")
+        return f"Error creating return track: {str(e)}"
+
 
 @mcp.tool()
 def set_track_name(ctx: Context, track_index: int, name: str) -> str:
@@ -333,6 +380,40 @@ def set_track_name(ctx: Context, track_index: int, name: str) -> str:
     except Exception as e:
         logger.error(f"Error setting track name: {str(e)}")
         return f"Error setting track name: {str(e)}"
+
+@mcp.tool()
+def set_track_color(ctx: Context, track_index: int, color: int) -> str:
+    """
+    Set the color of a track using an RGB integer value.
+    
+    Parameters:
+    - track_index: The index of the track to change
+    - color: RGB integer value (e.g., 0xFF0000 for red)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_color", {"track_index": track_index, "color": color})
+        return f"Set track {track_index} color to {hex(result.get('color'))}"
+    except Exception as e:
+        logger.error(f"Error setting track color: {str(e)}")
+        return f"Error setting track color: {str(e)}"
+
+@mcp.tool()
+def set_track_color_index(ctx: Context, track_index: int, color_index: int) -> str:
+    """
+    Set the color of a track using Ableton's color palette index (0-69).
+    
+    Parameters:
+    - track_index: The index of the track to change
+    - color_index: Palette index (0-69)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_color_index", {"track_index": track_index, "color_index": color_index})
+        return f"Set track {track_index} color index to {result.get('color_index')}"
+    except Exception as e:
+        logger.error(f"Error setting track color index: {str(e)}")
+        return f"Error setting track color index: {str(e)}"
 
 @mcp.tool()
 def create_clip(ctx: Context, track_index: int, clip_index: int, length: float = 4.0) -> str:
@@ -513,6 +594,360 @@ def stop_playback(ctx: Context) -> str:
     except Exception as e:
         logger.error(f"Error stopping playback: {str(e)}")
         return f"Error stopping playback: {str(e)}"
+
+@mcp.tool()
+def undo(ctx: Context) -> str:
+    """Undo the last action in Ableton."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("undo")
+        if result.get("success"):
+            return "Undone successfully"
+        else:
+            return result.get("message", "Nothing to undo")
+    except Exception as e:
+        logger.error(f"Error undoing: {str(e)}")
+        return f"Error undoing: {str(e)}"
+
+@mcp.tool()
+def redo(ctx: Context) -> str:
+    """Redo the last undone action in Ableton."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("redo")
+        if result.get("success"):
+            return "Redone successfully"
+        else:
+            return result.get("message", "Nothing to redo")
+    except Exception as e:
+        logger.error(f"Error redoing: {str(e)}")
+        return f"Error redoing: {str(e)}"
+
+@mcp.tool()
+def set_track_solo(ctx: Context, track_index: int, solo: bool) -> str:
+    """
+    Set the solo state of a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - solo: True to solo, False to unsolo
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_solo", {"track_index": track_index, "solo": solo})
+        state = "soloed" if result.get("solo") else "unsoloed"
+        return f"Track {track_index} {state}"
+    except Exception as e:
+        logger.error(f"Error setting track solo: {str(e)}")
+        return f"Error setting track solo: {str(e)}"
+
+@mcp.tool()
+def set_track_mute(ctx: Context, track_index: int, mute: bool) -> str:
+    """
+    Set the mute state of a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - mute: True to mute, False to unmute
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_mute", {"track_index": track_index, "mute": mute})
+        state = "muted" if result.get("mute") else "unmuted"
+        return f"Track {track_index} {state}"
+    except Exception as e:
+        logger.error(f"Error setting track mute: {str(e)}")
+        return f"Error setting track mute: {str(e)}"
+
+@mcp.tool()
+def set_track_arm(ctx: Context, track_index: int, arm: bool) -> str:
+    """
+    Set the arm state of a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - arm: True to arm, False to unarm
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_arm", {"track_index": track_index, "arm": arm})
+        if result.get("success") == False:
+            return result.get("message", "Could not arm track")
+        state = "armed" if result.get("arm") else "unarmed"
+        return f"Track {track_index} {state}"
+    except Exception as e:
+        logger.error(f"Error setting track arm: {str(e)}")
+        return f"Error setting track arm: {str(e)}"
+
+@mcp.tool()
+def create_scene(ctx: Context, index: int = -1) -> str:
+    """
+    Create a new scene in Ableton.
+    
+    Parameters:
+    - index: The index to insert the scene at (-1 = end)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("create_scene", {"index": index})
+        return f"Created scene at index {result.get('scene_index')}"
+    except Exception as e:
+        logger.error(f"Error creating scene: {str(e)}")
+        return f"Error creating scene: {str(e)}"
+
+@mcp.tool()
+def fire_scene(ctx: Context, scene_index: int) -> str:
+    """
+    Fire a scene in Ableton.
+    
+    Parameters:
+    - scene_index: The index of the scene to fire
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("fire_scene", {"scene_index": scene_index})
+        return f"Fired scene {scene_index}"
+    except Exception as e:
+        logger.error(f"Error firing scene: {str(e)}")
+        return f"Error firing scene: {str(e)}"
+
+@mcp.tool()
+def delete_scene(ctx: Context, scene_index: int) -> str:
+    """
+    Delete a scene in Ableton.
+    
+    Parameters:
+    - scene_index: The index of the scene to delete
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("delete_scene", {"scene_index": scene_index})
+        return f"Deleted scene {scene_index}"
+    except Exception as e:
+        logger.error(f"Error deleting scene: {str(e)}")
+        return f"Error deleting scene: {str(e)}"
+
+@mcp.tool()
+def duplicate_scene(ctx: Context, scene_index: int) -> str:
+    """
+    Duplicate a scene in Ableton.
+
+    Parameters:
+    - scene_index: The index of the scene to duplicate
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("duplicate_scene", {"scene_index": scene_index})
+        return f"Duplicated scene {scene_index}"
+    except Exception as e:
+        logger.error(f"Error duplicating scene: {str(e)}")
+        return f"Error duplicating scene: {str(e)}"
+
+@mcp.tool()
+def capture_and_insert_scene(ctx: Context) -> str:
+    """
+    Captures all currently playing clips into a new scene.
+    This is Ableton's 'Capture and Insert Scene' feature.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("capture_and_insert_scene")
+        return "Captured currently playing clips into a new scene"
+    except Exception as e:
+        logger.error(f"Error capturing scene: {str(e)}")
+        return f"Error capturing scene: {str(e)}"
+
+@mcp.tool()
+def set_metronome(ctx: Context, enabled: bool) -> str:
+    """
+    Enable or disable the metronome in Ableton.
+    
+    Parameters:
+    - enabled: True to enable, False to disable
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_metronome", {"enabled": enabled})
+        state = "enabled" if result.get("enabled") else "disabled"
+        return f"Metronome {state}"
+    except Exception as e:
+        logger.error(f"Error setting metronome: {str(e)}")
+        return f"Error setting metronome: {str(e)}"
+
+@mcp.tool()
+def capture_midi(ctx: Context) -> str:
+    """
+    Capture recently played MIDI notes even if not recording.
+    This is Ableton's 'Capture MIDI' feature.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("capture_midi")
+        if result.get("success"):
+            return "MIDI captured successfully"
+        else:
+            return result.get("message", "Nothing to capture")
+    except Exception as e:
+        logger.error(f"Error capturing MIDI: {str(e)}")
+        return f"Error capturing MIDI: {str(e)}"
+
+@mcp.tool()
+def stop_all_clips(ctx: Context) -> str:
+    """Immediately stops all playing clips across all tracks."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("stop_all_clips")
+        return "Stopped all clips"
+    except Exception as e:
+        logger.error(f"Error stopping all clips: {str(e)}")
+        return f"Error stopping all clips: {str(e)}"
+
+@mcp.tool()
+def trigger_session_record(ctx: Context) -> str:
+    """Toggle or start session view recording."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("trigger_session_record")
+        return "Triggered session record"
+    except Exception as e:
+        logger.error(f"Error triggering session record: {str(e)}")
+        return f"Error triggering session record: {str(e)}"
+
+@mcp.tool()
+def set_track_monitoring(ctx: Context, track_index: int, state: int) -> str:
+    """
+    Set the monitoring state for a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - state: Monitoring state (0: In, 1: Auto, 2: Off)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_monitoring", {
+            "track_index": track_index,
+            "state": state
+        })
+        if "error" in result:
+            return f"Error: {result['error']}"
+        
+        monitoring_names = ["In", "Auto", "Off"]
+        state_name = monitoring_names[result.get("state", state)]
+        return f"Set track {track_index} monitoring to {state_name}"
+    except Exception as e:
+        logger.error(f"Error setting track monitoring: {str(e)}")
+        return f"Error setting track monitoring: {str(e)}"
+
+@mcp.tool()
+def tap_tempo(ctx: Context) -> str:
+    """Programmatic tap-tempo trigger."""
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("tap_tempo")
+        return "Tapped tempo"
+    except Exception as e:
+        logger.error(f"Error tapping tempo: {str(e)}")
+        return f"Error tapping tempo: {str(e)}"
+
+@mcp.tool()
+def jump_by(ctx: Context, beats: float) -> str:
+    """
+    Jump the playhead forward or backward by a number of beats.
+    
+    Parameters:
+    - beats: Number of beats to jump (positive for forward, negative for backward)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("jump_by", {"beats": beats})
+        direction = "forward" if beats > 0 else "backward"
+        return f"Jumped {abs(beats)} beats {direction}"
+    except Exception as e:
+        logger.error(f"Error jumping playhead: {str(e)}")
+        return f"Error jumping playhead: {str(e)}"
+
+@mcp.tool()
+def scrub_by(ctx: Context, beats: float) -> str:
+    """
+    Scrub the playhead by a number of beats.
+    
+    Parameters:
+    - beats: Number of beats to scrub
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("scrub_by", {"beats": beats})
+        return f"Scrubbed by {beats} beats"
+    except Exception as e:
+        logger.error(f"Error scrubbing playhead: {str(e)}")
+        return f"Error scrubbing playhead: {str(e)}"
+
+@mcp.tool()
+def duplicate_clip_to_arrangement(ctx: Context, track_index: int, clip_index: int, target_time: float) -> str:
+    """
+    Move a session clip into the arrangement timeline.
+    
+    Parameters:
+    - track_index: Index of the track containing the clip
+    - clip_index: Index of the clip slot
+    - target_time: Position in the arrangement (in beats) to place the clip
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("duplicate_clip_to_arrangement", {
+            "track_index": track_index,
+            "clip_index": clip_index,
+            "target_time": target_time
+        })
+        return f"Duplicated clip from track {track_index}, slot {clip_index} to arrangement at {target_time} beats"
+    except Exception as e:
+        logger.error(f"Error duplicating clip to arrangement: {str(e)}")
+        return f"Error duplicating clip to arrangement: {str(e)}"
+
+@mcp.tool()
+def set_track_frozen(ctx: Context, track_index: int, frozen: bool) -> str:
+    """
+    Freeze or unfreeze a track.
+    
+    Parameters:
+    - track_index: The index of the track
+    - frozen: True to freeze, False to unfreeze
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_track_frozen", {
+            "track_index": track_index,
+            "frozen": frozen
+        })
+        if "error" in result:
+            return f"Error: {result['error']}"
+        
+        state = "frozen" if result.get("frozen") else "unfrozen"
+        return f"Track {track_index} is now {state}"
+    except Exception as e:
+        logger.error(f"Error setting track frozen state: {str(e)}")
+        return f"Error setting track frozen state: {str(e)}"
+
+@mcp.tool()
+def create_take_lane(ctx: Context, track_index: int) -> str:
+    """
+    Create a new take lane for a track (Live 11+ comping feature).
+    
+    Parameters:
+    - track_index: The index of the track
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("create_take_lane", {
+            "track_index": track_index
+        })
+        if "error" in result:
+            return f"Error: {result['error']}"
+        
+        return f"Created new take lane for track {track_index}"
+    except Exception as e:
+        logger.error(f"Error creating take lane: {str(e)}")
+        return f"Error creating take lane: {str(e)}"
 
 @mcp.tool()
 def get_browser_tree(ctx: Context, category_type: str = "all") -> str:
@@ -932,61 +1367,183 @@ def search_cached_devices(ctx: Context, search_term: str, category: str = None, 
         logger.error(f"Error searching cached devices: {str(e)}")
         return f"Error searching cached devices: {str(e)}"
 
-@mcp.tool()
-def get_places(ctx: Context) -> str:
-    """
-    Get the list of Places (user-added folders) from Ableton's browser.
-    Places are custom locations that users have added to their browser for quick access.
-
-    Returns information about available places including their names, URIs, and attributes.
-    """
-    try:
-        ableton = get_ableton_connection()
-        result = ableton.send_command("get_places")
-        return json.dumps(result, indent=2)
-    except Exception as e:
-        logger.error(f"Error getting places: {str(e)}")
-        return f"Error getting places: {str(e)}"
 
 @mcp.tool()
-def browse_place(ctx: Context, place_index: int = None, place_uri: str = None, path: str = "") -> str:
+def build_sample_database(ctx: Context, force_rebuild: bool = False) -> str:
     """
-    Browse the contents of a specific Place (user-added folder).
+    Build or update the SQLite sample database for fast searching.
+    This scans all samples in Ableton's browser and creates a searchable database.
 
     Parameters:
-    - place_index: The index of the place to browse (from get_places results)
-    - place_uri: Alternative way to specify place by URI
-    - path: Optional sub-path within the place to navigate to (e.g., "Samples/Drums")
+    - force_rebuild: Force rebuild even if database is current (default: False)
 
-    Specify either place_index OR place_uri, not both.
+    Initial scan may take a few minutes but subsequent searches will be very fast.
     """
     try:
         ableton = get_ableton_connection()
-        result = ableton.send_command("browse_place", {
-            "place_index": place_index,
-            "place_uri": place_uri,
-            "path": path
+        result = ableton.send_command("build_sample_database", {"force_rebuild": force_rebuild})
+
+        if "error" in result:
+            logger.error(f"Error building sample database: {result['error']}")
+            return f"Error building sample database: {result['error']}"
+
+        status = result.get("status", "unknown")
+        if status == "database_built":
+            samples_count = result.get("samples_count", 0)
+            build_time = result.get("build_time", 0)
+            return f"Sample database built successfully!\n\nScanned {samples_count:,} items in {build_time:.2f} seconds.\nDatabase saved to: {result.get('database_path', 'unknown')}\n\nYou can now use search_samples for lightning-fast sample searches."
+        elif status == "database_current":
+            samples_count = result.get("samples_count", 0)
+            return f"Sample database is current with {samples_count:,} samples. Use force_rebuild=True to rebuild anyway."
+        else:
+            return f"Database build status: {status}"
+
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Error building sample database: {error_msg}")
+        return f"Error building sample database: {error_msg}"
+
+@mcp.tool()
+def get_database_status(ctx: Context) -> str:
+    """
+    Get the current status of the sample database including scan progress.
+    Shows sample count, last scan time, and database file location.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_database_status", {})
+
+        if "error" in result:
+            return f"Error getting database status: {result['error']}"
+
+        status = result.get("status", "unknown")
+        samples_count = result.get("samples_count", 0)
+
+        if status == "not_initialized":
+            return "Sample database not initialized. Use build_sample_database to create it."
+        elif status == "empty":
+            return "Sample database exists but is empty. Use build_sample_database to populate it."
+        elif status == "ready":
+            last_scan = result.get("last_scan", "Unknown")
+            db_path = result.get("database_path", "Unknown")
+            return f"Sample database ready!\n\nSamples indexed: {samples_count:,}\nLast scan: {last_scan}\nDatabase file: {db_path}\n\nUse search_samples for fast searches."
+        else:
+            return f"Database status: {status} ({samples_count:,} samples)"
+
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Error getting database status: {error_msg}")
+        return f"Error getting database status: {error_msg}"
+
+@mcp.tool()
+def search_samples(ctx: Context, search_term: str, max_results: int = 200, file_types: list = None, include_paths: bool = False) -> str:
+    """
+    Fast SQLite-powered search for audio samples. Uses pre-built database for instant results.
+    Supports multi-word searches (e.g., "futurephonic kick" finds "01 Adrift Kick - FBD Futurephonic").
+
+    Parameters:
+    - search_term: Name or partial name to search for (supports multiple words)
+    - max_results: Maximum number of results to return (default: 200)
+    - file_types: Optional list of file extensions to filter by (e.g., ["wav", "aiff"])
+    - include_paths: Include full file paths in results for direct loading (default: False)
+
+    If database doesn't exist, it will be built automatically on first search.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("search_samples", {
+            "search_term": search_term,
+            "max_results": max_results,
+            "file_types": file_types,
+            "include_paths": include_paths
         })
         return json.dumps(result, indent=2)
     except Exception as e:
-        logger.error(f"Error browsing place: {str(e)}")
-        return f"Error browsing place: {str(e)}"
+        logger.error(f"Error searching samples: {str(e)}")
+        return f"Error searching samples: {str(e)}"
 
 @mcp.tool()
-def explore_browser_structure(ctx: Context) -> str:
+def load_sample_by_name(ctx: Context, track_index: int, sample_name: str) -> str:
     """
-    Comprehensive exploration of Ableton's browser structure to find user-added folders and Places.
-    This diagnostic tool examines all browser sections to locate where custom folders are stored.
+    Load a found sample onto an audio track by its exact name.
+    Use this after finding a sample with search_samples.
 
-    Useful for debugging when get_places() doesn't return expected user-added folders.
+    Parameters:
+    - track_index: Index of the audio track to load the sample onto (0-based)
+    - sample_name: Exact name of the sample (e.g., "01 Adrift Kick - FBD Futurephonic.wav")
+
+    The sample will be loaded as an audio clip on the specified track.
     """
     try:
         ableton = get_ableton_connection()
-        result = ableton.send_command("explore_browser_structure")
+        result = ableton.send_command("load_sample_by_name", {
+            "track_index": track_index,
+            "sample_name": sample_name
+        })
+
+        if "error" in result:
+            logger.error(f"Error loading sample: {result['error']}")
+            return f"Error loading sample: {result['error']}"
+
+        if result.get("loaded", False):
+            return f"✅ Sample loaded successfully!\n\nSample: {result.get('sample_name', sample_name)}\nTrack: {result.get('track_name', 'Unknown')} (index {track_index})"
+        else:
+            return f"Failed to load sample '{sample_name}' onto track {track_index}"
+
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Error loading sample: {error_msg}")
+        return f"Error loading sample: {error_msg}"
+
+@mcp.tool()
+def load_sample_by_path(ctx: Context, track_index: int, file_path: str) -> str:
+    """
+    Load a sample onto an audio track directly by its file system path.
+    Use this when you have the full file path from search_samples with include_paths=True.
+
+    Parameters:
+    - track_index: Index of the audio track to load the sample onto (0-based)
+    - file_path: Full file system path to the sample file
+
+    The sample will be loaded as an audio clip on the specified track using direct file access.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("load_sample_by_path", {
+            "track_index": track_index,
+            "file_path": file_path
+        })
+
+        if "error" in result:
+            logger.error(f"Error loading sample by path: {result['error']}")
+            return f"Error loading sample by path: {result['error']}"
+
+        if result.get("loaded", False):
+            return f"✅ Sample loaded successfully!\n\nFile: {result.get('file_path', file_path)}\nTrack: {result.get('track_name', 'Unknown')} (index {track_index})"
+        else:
+            return f"Failed to load sample from path '{file_path}' onto track {track_index}"
+
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Error loading sample by path: {error_msg}")
+        return f"Error loading sample by path: {error_msg}"
+
+@mcp.tool()
+def investigate_sample_database(ctx: Context) -> str:
+    """
+    Investigate if Ableton has an existing sample database or search system that we can access.
+    This checks for database/index/search attributes at the application and browser level,
+    as well as any file-based databases in Ableton's preferences.
+
+    Useful for building an efficient sample search system instead of scanning 19,000+ samples each time.
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("investigate_sample_database")
         return json.dumps(result, indent=2)
     except Exception as e:
-        logger.error(f"Error exploring browser structure: {str(e)}")
-        return f"Error exploring browser structure: {str(e)}"
+        logger.error(f"Error investigating sample database: {str(e)}")
+        return f"Error investigating sample database: {str(e)}"
 
 @mcp.tool()
 def explore_api(ctx: Context) -> str:

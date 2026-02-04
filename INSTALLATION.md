@@ -111,6 +111,30 @@ When the script is loaded correctly, you will see a message in Ableton's status 
 
 Choose your preferred AI assistant:
 
+### 🟢 Gemini CLI
+
+1. **Open your terminal.**
+2. **Locate your settings file:**
+   - **Mac/Linux**: `~/.gemini/settings.json`
+   - **Windows**: `%USERPROFILE%\.gemini\settings.json`
+3. **Add the following to the `mcpServers` object:**
+
+```json
+{
+  "mcpServers": {
+    "AbletonMCP": {
+      "command": "python",
+      "args": [
+        "/absolute/path/to/ableton-mcp-extended/MCP_Server/server.py"
+      ]
+    }
+  }
+}
+```
+
+4. **Update the path:** Replace `/absolute/path/to/ableton-mcp-extended` with your actual installation path.
+5. **Restart Gemini CLI.**
+
 ### 🔵 Claude Desktop
 
 1. **Open Claude Desktop**
@@ -170,6 +194,9 @@ echo $PWD/MCP_Server/server.py
 4. **Save settings**
 
 ### Verify AI Connection
+
+**For Gemini CLI:**
+The terminal will show a message like "Connected to Ableton at localhost:9877" or you can run `/help` to see if the Ableton tools are listed.
 
 **For Claude Desktop:**
 Look for a **🔨 hammer icon** in the chat interface - this indicates MCP tools are loaded.
