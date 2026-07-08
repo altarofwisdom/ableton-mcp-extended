@@ -105,7 +105,9 @@ class AbletonConnection:
             "create_midi_track", "create_audio_track", "set_track_name",
             "create_clip", "add_notes_to_clip", "set_clip_name",
             "set_tempo", "fire_clip", "stop_clip", "set_device_parameter",
+            "set_clip_automation_step", "clear_clip_automation",
             "start_playback", "stop_playback", "load_instrument_or_effect",
+            "load_browser_item", "load_sample_by_name", "load_sample_by_path",
             "delete_track", "duplicate_track", "create_return_track", "delete_return_track",
             "create_scene", "delete_scene", "duplicate_scene", "capture_and_insert_scene",
             "stop_all_clips", "trigger_session_record", "set_track_monitoring", "tap_tempo",
@@ -127,7 +129,7 @@ class AbletonConnection:
                 time.sleep(0.1)  # 100ms delay
             
             # Set timeout based on command type
-            timeout = 15.0 if is_modifying_command else 10.0
+            timeout = 30.0 if is_modifying_command else 15.0
             self.sock.settimeout(timeout)
             
             # Receive the response
@@ -487,6 +489,23 @@ def set_clip_name(ctx: Context, track_index: int, clip_index: int, name: str) ->
     except Exception as e:
         logger.error(f"Error setting clip name: {str(e)}")
         return f"Error setting clip name: {str(e)}"
+
+@mcp.tool()
+def get_notes_from_clip(ctx: Context, track_index: int, clip_index: int) -> str:
+    """
+    Get all MIDI notes from a clip.
+    
+    Parameters:
+    - track_index: The index of the track containing the clip
+    - clip_index: The index of the clip slot containing the clip
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("get_notes_from_clip", {"track_index": track_index, "clip_index": clip_index})
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error getting notes from clip: {str(e)}")
+        return f"Error getting notes: {str(e)}"
 
 @mcp.tool()
 def set_tempo(ctx: Context, tempo: float) -> str:
@@ -1199,6 +1218,75 @@ def set_device_parameter(ctx: Context, track_index: int, device_index: int, para
     except Exception as e:
         logger.error(f"Error setting device parameter: {str(e)}")
         return f"Error setting device parameter: {str(e)}"
+
+@mcp.tool()
+def set_clip_automation_step(
+    ctx: Context,
+    track_index: int,
+    clip_index: int,
+    device_index: int,
+    parameter_index: int,
+    start_time: float,
+    duration: float,
+    value: float
+) -> str:
+    """
+    Insert a stepped automation segment into a clip envelope for a device parameter.
+
+    Parameters:
+    - track_index: Track containing the clip and device
+    - clip_index: Clip slot index
+    - device_index: Device index on the track
+    - parameter_index: Parameter index on the device
+    - start_time: Start time in beats within the clip
+    - duration: Duration in beats (must be > 0)
+    - value: Parameter value to write (will be clamped to parameter range)
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("set_clip_automation_step", {
+            "track_index": track_index,
+            "clip_index": clip_index,
+            "device_index": device_index,
+            "parameter_index": parameter_index,
+            "start_time": start_time,
+            "duration": duration,
+            "value": value
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error setting clip automation step: {str(e)}")
+        return f"Error setting clip automation step: {str(e)}"
+
+@mcp.tool()
+def clear_clip_automation(
+    ctx: Context,
+    track_index: int,
+    clip_index: int,
+    device_index: int,
+    parameter_index: int
+) -> str:
+    """
+    Clear clip automation envelope data for a single device parameter.
+
+    Parameters:
+    - track_index: Track containing the clip and device
+    - clip_index: Clip slot index
+    - device_index: Device index on the track
+    - parameter_index: Parameter index on the device
+    """
+    try:
+        ableton = get_ableton_connection()
+        result = ableton.send_command("clear_clip_automation", {
+            "track_index": track_index,
+            "clip_index": clip_index,
+            "device_index": device_index,
+            "parameter_index": parameter_index
+        })
+        return json.dumps(result, indent=2)
+    except Exception as e:
+        logger.error(f"Error clearing clip automation: {str(e)}")
+        return f"Error clearing clip automation: {str(e)}"
 
 @mcp.tool()
 def clear_clip(ctx: Context, track_index: int, clip_index: int) -> str:
